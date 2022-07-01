@@ -1,6 +1,7 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
+import {ActionTypes, addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/state";
 
 
 export type  PostsType = {
@@ -9,20 +10,27 @@ export type  PostsType = {
     likesCount: number
 }
 
-export type ProfilePageType = {
+export type MyPostsPageType = {
     posts: Array<PostsType>
-    addPost: (postText: string) => void
+    dispatch: (action: ActionTypes) => void
+    newPostText: string
 }
 
+export function MyPosts(props:MyPostsPageType) {
 
-export function MyPosts(props:ProfilePageType) {
-
-    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/> )
+    let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/> )
     let newPostElement = React.createRef<HTMLTextAreaElement>()
     let addPost = () => {
         if (newPostElement.current) {
+            props.dispatch(addPostActionCreator())
+        }
+    }
+
+    let onPostChange = () => {
+        if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.addPost(text)
+            let action = updateNewPostTextActionCreator(text)
+            props.dispatch(action)
         }
     }
 
@@ -31,7 +39,7 @@ export function MyPosts(props:ProfilePageType) {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText} />
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>
