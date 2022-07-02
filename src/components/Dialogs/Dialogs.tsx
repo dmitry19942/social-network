@@ -3,13 +3,7 @@ import React from "react";
 import {DialogItem, DialogsItemType} from "./DialogItem/DialogItem";
 import s from './Dialogs.module.css'
 import {Message, MessagesType} from "./Message/Message";
-import {
-    ActionTypes,
-    addPostActionCreator,
-    sendMessageCreator,
-    updateNewMessageBodyCreator,
-    updateNewPostTextActionCreator
-} from "../../redux/state";
+import {ActionTypes, sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
 
 export type DialogsType = {
     dialogs: Array<DialogsItemType>
