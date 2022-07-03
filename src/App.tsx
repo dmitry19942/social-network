@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
-
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/News/News";
@@ -10,7 +9,7 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Profile} from "./components/Profile/Profile";
 import {ActionTypes} from "./redux/profile-reducer";
-import {RootStateType} from "./redux/state";
+import {RootStateType} from "./redux/store";
 
 export type AppPropsType = {
     state: RootStateType
