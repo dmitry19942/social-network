@@ -3,21 +3,20 @@ import s from './Profile.module.css';
 import {MyPosts,  PostsType} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {ActionTypes} from "../../redux/profile-reducer";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {store, StoreType} from "../../redux/store";
+
 
 
 type ProfileType = {
-    posts: Array<PostsType>
-    dispatch: (action: ActionTypes) => void
-    newPostText: string
+    store: StoreType
 }
 
 export function Profile(props: ProfileType) {
 
     return <div>
         <ProfileInfo />
-        <MyPosts posts={props.posts}
-                 dispatch={props.dispatch}
-                 newPostText={props.newPostText}
+        <MyPostsContainer store={store}
         />
     </div>
 }

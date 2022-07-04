@@ -12,7 +12,8 @@ export type  PostsType = {
 
 export type MyPostsPageType = {
     posts: Array<PostsType>
-    dispatch: (action: ActionTypes) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
     newPostText: string
 }
 
@@ -20,17 +21,14 @@ export function MyPosts(props:MyPostsPageType) {
 
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/> )
     let newPostElement = React.createRef<HTMLTextAreaElement>()
-    let addPost = () => {
-        if (newPostElement.current) {
-            props.dispatch(addPostActionCreator())
-        }
+    let onAddPost = () => {
+        props.addPost()
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            let action = updateNewPostTextActionCreator(text)
-            props.dispatch(action)
+            props.updateNewPostText(text)
         }
     }
 
@@ -42,7 +40,7 @@ export function MyPosts(props:MyPostsPageType) {
                     <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText} />
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

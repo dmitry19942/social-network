@@ -12,8 +12,6 @@ let renderTree = (state: RootStateType) => {
         <React.StrictMode>
             <App state={state}
                  dispatch={store.dispatch.bind(store)}
-                 newPostText={state.profilePage.newPostText}
-                 newMessageBody={state.dialogsPage.newMessageBody}
                  />
         </React.StrictMode>,
         document.getElementById('root')
