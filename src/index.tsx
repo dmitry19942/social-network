@@ -5,15 +5,17 @@ import {RootStateType} from "./redux/store";
 import ReactDOM from 'react-dom';
 import App from './App';
 import {store} from "./redux/redux-store";
+import {Provider} from "./StoreContext";
+import {BrowserRouter} from "react-router-dom";
 
 
 let renderTree = (state: RootStateType) => {
     ReactDOM.render(
-        <React.StrictMode>
-            <App state={state}
-                 dispatch={store.dispatch.bind(store)}
-                 />
-        </React.StrictMode>,
+        <BrowserRouter>
+            <Provider store={store}>
+            <App/>
+            </Provider>
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }
