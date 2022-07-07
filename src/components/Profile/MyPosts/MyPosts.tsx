@@ -1,23 +1,10 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
+import {MyPostsType} from "./MyPostsContainer";
 
 
-
-export type  PostsType = {
-    id: number
-    message: string
-    likesCount: number
-}
-
-export type MyPostsPageType = {
-    posts: Array<PostsType>
-    addPost: () => void
-    updateNewPostText: (text: string) => void
-    newPostText: string
-}
-
-export function MyPosts(props:MyPostsPageType) {
+export function MyPosts(props: MyPostsType) {
 
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/> )
     let newPostElement = React.createRef<HTMLTextAreaElement>()

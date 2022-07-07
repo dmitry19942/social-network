@@ -1,20 +1,12 @@
 import React from "react";
 
-import {DialogItem, DialogsItemType} from "./DialogItem/DialogItem";
+import {DialogItem} from "./DialogItem/DialogItem";
 import s from './Dialogs.module.css'
-import {Message, MessagesType} from "./Message/Message";
-import {ActionTypes, sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
-import {store} from "../../redux/store";
+import {Message} from "./Message/Message";
+import {DialogsPropsType} from "./DialogsContainer";
 
-export type DialogsType = {
-    dialogs: Array<DialogsItemType>
-    messages: Array<MessagesType>
-    newMessageBody: string
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
-}
 
-export const Dialogs = (props: DialogsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElements = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
     let messagesElements = props.messages.map( m => <Message key={m.id} messages={m.messages} id={m.id} />)
