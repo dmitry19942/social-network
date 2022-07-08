@@ -1,4 +1,3 @@
-
 import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
 
 export type DialogsItemType = {
@@ -47,12 +46,9 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
                 id: new Date().getTime(),
                 messages: state.newMessageBody
             }
-            state.newMessageBody = ''
-            state.messages.push(newMessage)
-            return state
+            return {...state,messages: [...state.messages, newMessage], newMessageBody: ''}
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.messageBody
-            return state
+            return {...state, newMessageBody: action.messageBody}
         default:
             return state
     }
