@@ -1,4 +1,3 @@
-import React from "react";
 import {addPostActionCreator, PostsType, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {AppRootStateType} from "../../../redux/redux-store";

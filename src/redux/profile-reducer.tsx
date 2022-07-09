@@ -1,4 +1,3 @@
-
 import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 
 export const ADD_POST = 'ADD-POST'
