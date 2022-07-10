@@ -1,5 +1,7 @@
 import React from "react";
 import {UsersType} from "../../redux/users-reducer";
+import axios from "axios";
+import userPhoto from '../../assets/images/user.jpg';
 
 
 type UsersPropsType = {
@@ -12,11 +14,16 @@ type UsersPropsType = {
 export const Users = (props: UsersPropsType) => {
 
     if(props.users.length === 0) {
-        props.setUsers([
-            {id: 1, photoUrl: 'https://www.nobelprize.org/images/125646-portrait-medium.jpg', followed: false, fullName: 'Dmitry Harustovich', status: 'I am boss', location: {city: 'Minsk', country: 'Belarus'}},
-            {id: 2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Valery_Karpin_Rostov.jpg', followed: true, fullName: 'Valery Karpin', status: 'I am best', location: {city: 'Kiev', country: 'Ukraine'}},
-            {id: 3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Zbigniew_Rau.jpg', followed: false, fullName: 'Zbigniew Swiderski', status: 'I am great', location: {city: 'Krakow', country: 'Poland'}},
-        ])
+
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+            props.setUsers(res.data.items)
+        })
+
+        // props.setUsers([
+        //     {id: 1, photoUrl: 'https://www.nobelprize.org/images/125646-portrait-medium.jpg', followed: false, fullName: 'Dmitry Harustovich', status: 'I am boss', location: {city: 'Minsk', country: 'Belarus'}},
+        //     {id: 2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Valery_Karpin_Rostov.jpg', followed: true, fullName: 'Valery Karpin', status: 'I am best', location: {city: 'Kiev', country: 'Ukraine'}},
+        //     {id: 3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Zbigniew_Rau.jpg', followed: false, fullName: 'Zbigniew Swiderski', status: 'I am great', location: {city: 'Krakow', country: 'Poland'}},
+        // ])
     }
 
     return <div>
@@ -24,7 +31,7 @@ export const Users = (props: UsersPropsType) => {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photoUrl} style={{width: 150}} alt=''/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} style={{width: 150}} alt=''/>
                     </div>
                     <div>
                         { u.followed ?
@@ -35,12 +42,12 @@ export const Users = (props: UsersPropsType) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.fullName}</div>
+                        <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
                     <span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
+                        <div>{'u.location.country'}</div>
+                        <div>{'u.location.city'}</div>
                     </span>
                 </span>
             </div>)
