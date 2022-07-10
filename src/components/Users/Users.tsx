@@ -13,11 +13,14 @@ type UsersPropsType = {
 
 export const Users = (props: UsersPropsType) => {
 
+    let getUsers = () => {
+
     if(props.users.length === 0) {
 
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
             props.setUsers(res.data.items)
         })
+    }
 
         // props.setUsers([
         //     {id: 1, photoUrl: 'https://www.nobelprize.org/images/125646-portrait-medium.jpg', followed: false, fullName: 'Dmitry Harustovich', status: 'I am boss', location: {city: 'Minsk', country: 'Belarus'}},
@@ -27,6 +30,7 @@ export const Users = (props: UsersPropsType) => {
     }
 
     return <div>
+        <button onClick={getUsers}>Get Users</button>
         {
             props.users.map(u => <div key={u.id}>
                 <span>
