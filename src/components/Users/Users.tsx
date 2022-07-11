@@ -4,7 +4,7 @@ import axios from "axios";
 import userPhoto from '../../assets/images/user.jpg';
 
 
-type UsersPropsType = {
+export type UsersPropsType = {
     users: UsersType[]
     follow: (userId: number) => void
     unfollow: (userId: number) => void
