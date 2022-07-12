@@ -5,18 +5,14 @@ import {UsersPropsType} from "./Users";
 import {AppRootStateType} from "../../redux/redux-store";
 
 
-
 export class Users extends React.Component<UsersPropsType, AppRootStateType>{
 
-    constructor(props: UsersPropsType) {
-        super(props);
-
+    componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users')
             .then(res => {
                 this.props.setUsers(res.data.items)
             })
-        }
-
+    }
 
     render() {
         return <div>
