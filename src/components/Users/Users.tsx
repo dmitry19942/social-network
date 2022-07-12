@@ -1,15 +1,10 @@
 import React from "react";
-import {UsersType} from "../../redux/users-reducer";
 import axios from "axios";
 import userPhoto from '../../assets/images/user.jpg';
+import { UsersPropsType } from "./UsersC";
 
 
-export type UsersPropsType = {
-    users: UsersType[]
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers: (users: UsersType[]) => void
-}
+
 
 export const Users = (props: UsersPropsType) => {
 
