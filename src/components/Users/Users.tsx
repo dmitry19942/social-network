@@ -1,36 +1,38 @@
 import React from "react";
-import axios from "axios";
-import userPhoto from '../../assets/images/user.jpg';
-import { UsersPropsType } from "./UsersC";
+import s from "./users.module.css";
+import userPhoto from "../../assets/images/user.jpg";
+import {UserType} from "../../redux/users-reducer";
 
-
-
+export type UsersPropsType = {
+    users: UserType[]
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    currentPage: number
+    onCurrentPageChanged: (currentPage: number) => void
+}
 
 export const Users = (props: UsersPropsType) => {
 
-    let getUsers = () => {
+    // let pagesCount = Math.ceil(this.props.totalUserCount / this.props.pageSize)
 
-    if(props.users.length === 0) {
-
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
-            props.setUsers(res.data.items)
-        })
-    }
-
-        // props.setUsers([
-        //     {id: 1, photoUrl: 'https://www.nobelprize.org/images/125646-portrait-medium.jpg', followed: false, fullName: 'Dmitry Harustovich', status: 'I am boss', location: {city: 'Minsk', country: 'Belarus'}},
-        //     {id: 2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Valery_Karpin_Rostov.jpg', followed: true, fullName: 'Valery Karpin', status: 'I am best', location: {city: 'Kiev', country: 'Ukraine'}},
-        //     {id: 3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Zbigniew_Rau.jpg', followed: false, fullName: 'Zbigniew Swiderski', status: 'I am great', location: {city: 'Krakow', country: 'Poland'}},
-        // ])
+    let pages = []
+    for (let i = 1; i <= 10 ; i++) {
+        pages.push(i)
     }
 
     return <div>
-        <button onClick={getUsers}>Get Users</button>
+        <div>
+            {pages.map(p => {
+                return <span onClick={()=> {
+                    props.onCurrentPageChanged(p)}} className={props.currentPage === p ? s.selectedPage : ''}>{p}</span>
+            })}
+
+        </div>
         {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto} style={{width: 150}} alt=''/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.userPhoto} alt=''/>
                     </div>
                     <div>
                         { u.followed ?
