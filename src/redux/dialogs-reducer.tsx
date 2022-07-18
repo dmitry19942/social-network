@@ -1,4 +1,5 @@
-import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
+import {ActionTypes} from "./profile-reducer";
+
 
 export type DialogsItemType = {
     name: string
@@ -10,7 +11,7 @@ export type MessagesType = {
     messages: string
 }
 
-export type InitialStateType = {
+export type InitialDialogsStateType = {
     dialogs: DialogsItemType[],
     messages: MessagesType[],
     newMessageBody: string
@@ -19,7 +20,7 @@ export type InitialStateType = {
 export const SEND_MESSAGE = 'SEND-MESSAGE'
 export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 
-let initialState: InitialStateType = {
+let initialState: InitialDialogsStateType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrey'},
@@ -39,7 +40,7 @@ let initialState: InitialStateType = {
 }
 
 
-export const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes) : InitialStateType => {
+export const dialogsReducer = (state: InitialDialogsStateType = initialState, action: ActionTypes) : InitialDialogsStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             let newMessage: MessagesType = {
@@ -67,7 +68,9 @@ export const updateNewMessageBodyCreator = (body: string) => {
     } as const
 }
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+
+
+
 
 
 

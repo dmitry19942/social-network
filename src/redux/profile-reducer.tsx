@@ -1,7 +1,9 @@
 import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
+import {Profile_PropsType} from "../components/Profile/ProfileInfo/ProfileInfo";
 
-export const ADD_POST = 'ADD-POST'
-export const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
 export type  PostsType = {
     id: number
@@ -9,22 +11,24 @@ export type  PostsType = {
     likesCount: number
 }
 
-export type InitialStateType = {
+export type InitialProfileStateType = {
     posts: PostsType[]
     newPostText: string
+    profile: null | Profile_PropsType
 }
 
-let initialState: InitialStateType = {
+let initialState: InitialProfileStateType = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 10},
         {id: 2, message: "It's my first post", likesCount: 25},
         {id: 3, message: 'Blablabla', likesCount: 15},
         {id: 4, message: 'Valera is the best', likesCount: 9}
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+export const profileReducer = (state: InitialProfileStateType = initialState, action: ActionTypes): InitialProfileStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostsType = {
@@ -35,25 +39,20 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             return {...state, posts: [...state.posts, newPost], newPostText: ''}
         case UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.postText}
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile}
         default:
             return state
     }
 }
 
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    } as const
-}
+export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const updateNewPostTextActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, postText: text} as const)
+export const setUserProfile = (profile: null) => ({type: SET_USER_PROFILE, profile} as const)
 
-export const updateNewPostTextActionCreator = (text: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        postText: text
-    } as const
-}
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
 
 
 

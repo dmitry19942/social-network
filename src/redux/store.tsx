@@ -1,23 +1,11 @@
+import {ActionTypes, InitialProfileStateType, profileReducer} from "./profile-reducer";
+import {dialogsReducer, InitialDialogsStateType} from "./dialogs-reducer";
 
-import {DialogsItemType} from "../components/Dialogs/DialogItem/DialogItem";
-import {MessagesType} from "../components/Dialogs/Message/Message";
-import {ActionTypes, PostsType, profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
 
-export type ProfilePageType = {
-    posts: Array<PostsType>
-    newPostText: string
-}
-
-export type DialogPageType = {
-    dialogs: Array<DialogsItemType>
-    messages: Array<MessagesType>
-    newMessageBody: string
-}
 
 export type RootStateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogPageType
+    profilePage: InitialProfileStateType
+    dialogsPage: InitialDialogsStateType
 }
 
 export type StoreType = {
@@ -37,7 +25,8 @@ export const store: StoreType = {
                 {id: 3, message: 'Blablabla', likesCount: 15},
                 {id: 4, message: 'Valera is the best', likesCount: 9}
             ],
-            newPostText: ''
+            newPostText: '',
+            profile: null
         },
         dialogsPage: {
             dialogs: [
