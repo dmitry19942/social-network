@@ -3,16 +3,16 @@ import s from './ProfileInfo.module.css';
 import {Preloader} from "../../common/Preloader/Preloader";
 
 export type Profile_PropsType  = {
-    aboutMe: string
+    aboutMe: string | null
     lookingForAJob: boolean
-    lookingForAJobDescription: string
+    lookingForAJobDescription: string | null
     fullName: string
     userId: number
-    photos: {small: string, large: string}
+    photos: {small: string | undefined, large: string | undefined}
 }
 
 type ProfileInfoPropsType = {
-    profile: null | Profile_PropsType
+    profile: Profile_PropsType
 }
 
 export function ProfileInfo(props: ProfileInfoPropsType) {

@@ -14,7 +14,7 @@ export type  PostsType = {
 export type InitialProfileStateType = {
     posts: PostsType[]
     newPostText: string
-    profile: null | Profile_PropsType
+    profile: Profile_PropsType
 }
 
 let initialState: InitialProfileStateType = {
@@ -25,7 +25,7 @@ let initialState: InitialProfileStateType = {
         {id: 4, message: 'Valera is the best', likesCount: 9}
     ],
     newPostText: '',
-    profile: null
+    profile: {aboutMe: null, lookingForAJob: false, lookingForAJobDescription: null, fullName: 'dmitriy199427', userId: 19481, photos: {small: '', large: ''}}
 }
 
 export const profileReducer = (state: InitialProfileStateType = initialState, action: ActionTypes): InitialProfileStateType => {
@@ -48,11 +48,11 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const updateNewPostTextActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, postText: text} as const)
-export const setUserProfile = (profile: null) => ({type: SET_USER_PROFILE, profile} as const)
+export const setUserProfileAC = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
 
 
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfileAC> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
 
 
 
