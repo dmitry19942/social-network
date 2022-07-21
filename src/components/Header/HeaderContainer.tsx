@@ -16,7 +16,7 @@ type MapDispatchToPropsType = {
 
 type HeaderAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-export class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType, AppRootStateType> {
+class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType, AppRootStateType> {
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true,
             headers: {'API-KEY': 'a1c29d8b-1c83-4c49-8a4c-55a3c1e75564'}})
@@ -39,7 +39,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login
-
     }
 }
 

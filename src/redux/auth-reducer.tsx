@@ -27,4 +27,4 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null) => ({type: SET_AUTH_USER_DATA, data: {id, email, login}})
 
 
-export type ActionTypes = ReturnType<typeof setAuthUserData>
+type ActionTypes = ReturnType<typeof setAuthUserData>
