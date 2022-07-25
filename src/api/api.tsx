@@ -15,7 +15,7 @@ export const userAPI = {
                 return res.data
             })
     },
-    getHeader() {
+    getLogin() {
         return instance.get(`auth/me`)
             .then(res => {
                 return res.data

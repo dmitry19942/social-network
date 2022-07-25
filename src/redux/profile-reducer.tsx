@@ -1,5 +1,10 @@
 import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 import {Profile_PropsType} from "../components/Profile/ProfileInfo/ProfileInfo";
+import {AnyAction} from "redux";
+import {userAPI} from "../api/api";
+import {store} from "./redux-store";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -16,6 +21,10 @@ export type InitialProfileStateType = {
     newPostText: string
     profile: Profile_PropsType
 }
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 
 let initialState: InitialProfileStateType = {
     posts: [
@@ -48,13 +57,17 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const updateNewPostTextActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, postText: text} as const)
-export const setUserProfileAC = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
+export const setUserProfile = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
 
 
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfileAC> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
 
-
-
-
-
+export const getProfileThunkCreator = (userId: string): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        userAPI.getProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
+    }
+}
