@@ -8,6 +8,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {compose} from "redux";
 
 
 type MapStateToPropsType = {
@@ -114,4 +115,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //     }
 // }
 
-export const UsersContainer = connect(mapStateToProps, { getUsersThunkCreator, onCurrentPageChangedThunkCreator, followThunkCreator, unFollowThunkCreator})(UsersAPIComponent)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, { getUsersThunkCreator, onCurrentPageChangedThunkCreator, followThunkCreator, unFollowThunkCreator})
+)(UsersAPIComponent)
+
