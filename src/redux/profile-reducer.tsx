@@ -1,7 +1,7 @@
 import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 import {Profile_PropsType} from "../components/Profile/ProfileInfo/ProfileInfo";
 import {AnyAction} from "redux";
-import {userAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 import {store} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
@@ -9,6 +9,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 
 export type  PostsType = {
     id: number
@@ -20,6 +21,7 @@ export type InitialProfileStateType = {
     posts: PostsType[]
     newPostText: string
     profile: Profile_PropsType
+    status: string
 }
 
 export type RootState = ReturnType<typeof store.getState>
@@ -34,7 +36,8 @@ let initialState: InitialProfileStateType = {
         {id: 4, message: 'Valera is the best', likesCount: 9}
     ],
     newPostText: '',
-    profile: {aboutMe: null, lookingForAJob: false, lookingForAJobDescription: null, fullName: 'dmitriy199427', userId: 19481, photos: {small: '', large: ''}}
+    profile: {aboutMe: null, lookingForAJob: false, lookingForAJobDescription: null, fullName: 'dmitriy199427', userId: 19481, photos: {small: '', large: ''}},
+    status: ''
 }
 
 export const profileReducer = (state: InitialProfileStateType = initialState, action: ActionTypes): InitialProfileStateType => {
@@ -50,6 +53,8 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
             return {...state, newPostText: action.postText}
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
+        case SET_STATUS:
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -58,16 +63,37 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const updateNewPostTextActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, postText: text} as const)
 export const setUserProfile = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
+export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof setStatus>
 
 export const getProfileThunkCreator = (userId: string): AppThunk => {
     return (dispatch: AppDispatch) => {
-        userAPI.getProfile(userId)
+        profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
+            })
+    }
+}
+
+export const getStatusThunkCreator = (userId: string): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        profileAPI.getStatus(userId)
+            .then(res => {
+                dispatch(setStatus(res.data))
+            })
+    }
+}
+
+export const updateStatusThunkCreator = (status: string): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        profileAPI.updateStatus(status)
+            .then(res => {
+                if(res.data.resultCode === 0) {
+                   dispatch(setStatus(status))
+                }
             })
     }
 }

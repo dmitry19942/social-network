@@ -3,8 +3,6 @@ import s from './ProfileInfo.module.css';
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
-
-
 export type Profile_PropsType  = {
     aboutMe: string | null
     lookingForAJob: boolean
@@ -16,6 +14,8 @@ export type Profile_PropsType  = {
 
 type ProfileInfoPropsType = {
     profile: Profile_PropsType
+    status: string
+    updateStatus: (status: string) => void
 }
 
 export function ProfileInfo(props: ProfileInfoPropsType) {
@@ -33,7 +33,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
             <img src={props.profile.photos.large} alt=""/>
             <div>{props.profile.fullName}</div>
             <div>{props.profile.aboutMe}</div>
-            <ProfileStatus status={'Hello my friends'} />
+            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
         </div>
     </div>
     )

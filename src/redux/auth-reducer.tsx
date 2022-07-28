@@ -1,5 +1,5 @@
 import {AnyAction} from "redux";
-import {userAPI} from "../api/api";
+import {authAPI} from "../api/api";
 import {store} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
@@ -40,7 +40,7 @@ type ActionTypes = ReturnType<typeof setAuthUserData>
 
 export const getLoginThunkCreator = (): AppThunk => {
     return (dispatch: AppDispatch) => {
-        userAPI.getLogin()
+        authAPI.getLogin()
             .then(data => {
                 if(data.resultCode === 0) {
                     let {id, email, login} = data.data
