@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 
-type ProfileStatusType = {
+type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string) => void
 }
@@ -10,7 +10,7 @@ type StateType = {
     status: string
 }
 
-export class ProfileStatus extends React.Component<ProfileStatusType, StateType> {
+export class ProfileStatus extends React.Component<ProfileStatusPropsType, StateType> {
 
 
     state = {
@@ -37,6 +37,14 @@ export class ProfileStatus extends React.Component<ProfileStatusType, StateType>
         this.setState({
             status: e.currentTarget.value
         })
+    }
+
+    componentDidUpdate(prevProps: ProfileStatusPropsType) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
