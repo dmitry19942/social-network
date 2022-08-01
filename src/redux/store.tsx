@@ -25,7 +25,6 @@ export const store: StoreType = {
                 {id: 3, message: 'Blablabla', likesCount: 15},
                 {id: 4, message: 'Valera is the best', likesCount: 9}
             ],
-            newPostText: '',
             profile: {aboutMe: null, lookingForAJob: false, lookingForAJobDescription: null, fullName: 'dmitriy199427', userId: 19481, photos: {small: '', large: ''}},
             status: ''
         },
@@ -44,11 +43,10 @@ export const store: StoreType = {
                 {id: 3, messages: 'Yo'},
                 {id: 4, messages: 'Yo'},
                 {id: 5, messages: 'Yo'}
-            ],
-            newMessageBody: ''
+            ]
         }
     },
-    _callSubscriber(state: RootStateType) {
+    _callSubscriber() {
         console.log('state changed')
     },
     subscribe(observer: (state: RootStateType) => void) {

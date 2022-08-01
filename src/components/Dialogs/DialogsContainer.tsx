@@ -1,14 +1,12 @@
 import {
     DialogsItemType,
     MessagesType,
-    sendMessageCreator,
-    updateNewMessageBodyCreator
+    sendMessageCreator
 } from "../../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
 import {AppRootStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import React from "react";
 
 
@@ -35,21 +33,18 @@ import React from "react";
 // }
 
 type MapStateToPropsType = {
-    newMessageBody: string
     dialogs: DialogsItemType[]
     messages: MessagesType[]
 }
 
 type MapDispatchToPropsType = {
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
+    sendMessage: (newMessageBody: string) => void
 }
 
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
-        newMessageBody: state.dialogsPage.newMessageBody,
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages
     }
@@ -57,11 +52,8 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {
-            dispatch(updateNewMessageBodyCreator(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageCreator())
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageCreator(newMessageBody))
         }
     }
 }

@@ -3,25 +3,21 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-
+type FormDataType = {
+    newMessageBody: string
+}
 
 export const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElements = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
     let messagesElements = props.messages.map( m => <Message key={m.id} messages={m.messages} id={m.id} />)
-    let newMessageElement = React.createRef<HTMLTextAreaElement>()
-    let onSendMessage = () => {
-        props.sendMessage()
-    }
 
-    let onMessageChange = () => {
-        if(newMessageElement.current) {
-            let body = newMessageElement.current.value
-            props.updateNewMessageBody(body)
-        }
-    }
 
+    let addNewMessage = (values: FormDataType) => {
+        props.sendMessage(values.newMessageBody)
+    }
 
     return (
         <div className={s.dialogs}>
@@ -31,11 +27,24 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={s.messages}>
                 <div>{ messagesElements }</div>
                 <div>
-                    <div><textarea ref={newMessageElement} value={props.newMessageBody} onChange={onMessageChange} placeholder={'Enter your message'}></textarea></div>
-                    <div><button onClick={onSendMessage}>Send</button></div>
+                    <AddMessageReduxForm onSubmit={addNewMessage}  />
                 </div>
             </div>
         </div>
     )
 }
+
+const AddMessageForm:  React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return (
+    <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
+        </div>
+        <div><button>Send</button></div>
+    </form>
+    )
+}
+
+const AddMessageReduxForm = reduxForm<FormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
+
 
