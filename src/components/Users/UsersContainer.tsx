@@ -20,14 +20,6 @@ type MapStateToPropsType = {
     followingInProgress: number[]
 }
 
-// type MapDispatchToPropsType = {
-//     follow: (userId: number) => void
-//     unfollow: (userId: number) => void
-//     setUsers: (users: UserType[]) => void
-//     setCurrentPage: (currentPage: number) => void
-//     setUsersTotalCount: (totalCount: number) => void
-//     toggleIsFetching: (isFetching: boolean) => void
-// }
 
 type UsersAPIComponentPropsType = {
     users: UserType[]
@@ -46,24 +38,9 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
     componentDidMount() {
         this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
     }
-    //     this.props.toggleIsFetching(true)
-    //     userAPI.getUsers(this.props.currentPage, this.props.pageSize)
-    //         .then(data => {
-    //             this.props.toggleIsFetching(false)
-    //             this.props.setUsers(data.items)
-    //             this.props.setUsersTotalCount(data.totalCount)
-    //         })
-    // }
 
     onCurrentPageChanged = (currentPage: number) => {
         this.props.onCurrentPageChangedThunkCreator(currentPage, this.props.pageSize)
-        // this.props.setCurrentPage(currentPage)
-        // this.props.toggleIsFetching(true)
-        // userAPI.getUsers(currentPage, this.props.pageSize)
-        //     .then(data => {
-        //         this.props.toggleIsFetching(false)
-        //         this.props.setUsers(data.items)
-        //     })
     }
 
     render() {
@@ -92,28 +69,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unfollow: (userId: number) => {
-//             dispatch(unfollowAC(userId))
-//         },
-//         setUsers: (users: UserType[]) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (currentPage: number) => {
-//             dispatch(setCurrentPageAC(currentPage))
-//         },
-//         setUsersTotalCount: (totalCount: number) => {
-//             dispatch(setUsersTotalCountAC(totalCount))
-//         },
-//         toggleIsFetching: (isFetching: boolean) => {
-//             dispatch(toggleIsFetchingAC(isFetching))
-//         }
-//     }
-// }
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, { getUsersThunkCreator, onCurrentPageChangedThunkCreator, followThunkCreator, unFollowThunkCreator})

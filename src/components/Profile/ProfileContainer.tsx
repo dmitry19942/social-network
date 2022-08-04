@@ -36,10 +36,6 @@ export class ProfileAPIContainer extends React.Component<PropsType, AppRootState
         }
         this.props.getProfileThunkCreator(userId)
         this.props.getStatusThunkCreator(userId)
-        // userAPI.getProfile(userId)
-        //     .then(data => {
-        //         this.props.setUserProfile(data)
-        //     })
     }
 
     render() {

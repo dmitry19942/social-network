@@ -2,7 +2,6 @@ import {ActionTypes, InitialProfileStateType, profileReducer} from "./profile-re
 import {dialogsReducer, InitialDialogsStateType} from "./dialogs-reducer";
 
 
-
 export type RootStateType = {
     profilePage: InitialProfileStateType
     dialogsPage: InitialDialogsStateType

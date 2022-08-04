@@ -1,4 +1,4 @@
-import {sendMessageCreator} from "./dialogs-reducer";
+import {sendMessage} from "./dialogs-reducer";
 import {Profile_PropsType} from "../components/Profile/ProfileInfo/ProfileInfo";
 import {AnyAction} from "redux";
 import {profileAPI} from "../api/api";
@@ -7,7 +7,6 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 
@@ -56,13 +55,13 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
     }
 }
 
-export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
+export const addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfile = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 
 
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof setStatus>
+export type ActionTypes = ReturnType<typeof addPost> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> | ReturnType<typeof setStatus>
 
 export const getProfileThunkCreator = (userId: string): AppThunk => {
     return (dispatch: AppDispatch) => {

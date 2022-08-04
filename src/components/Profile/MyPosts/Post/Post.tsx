@@ -9,7 +9,7 @@ type PostType = {
 export function Post(props: PostType) {
     return (
         <div className={s.item}>
-            <img src="https://likevideogid.ru/wp-content/uploads/2019/11/likee_avatarka.jpg"/>
+            <img src="https://likevideogid.ru/wp-content/uploads/2019/11/likee_avatarka.jpg" alt=''/>
             {props.message}
             <div>
                 <span>like</span> {props.likesCount}
