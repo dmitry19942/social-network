@@ -2,12 +2,13 @@ import {AnyAction} from "redux";
 import {authAPI} from "../api/api";
 import {store} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
 
 
 export type InitialStateType = {
-    id: number | null
+    id: string
     email: string | null
     login: string | null
     isAuth: boolean
@@ -18,7 +19,7 @@ export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 
 let initialState: InitialStateType = {
-    id: null,
+    id: '',
     email: null,
     login: null,
     isAuth: false
@@ -33,7 +34,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     }
 }
 
-export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: SET_AUTH_USER_DATA, payload: {id, email, login, isAuth}})
+export const setAuthUserData = (id: string, email: string | null, login: string | null, isAuth: boolean) => ({type: SET_AUTH_USER_DATA, payload: {id, email, login, isAuth}})
 
 
 type ActionTypes = ReturnType<typeof setAuthUserData>
@@ -56,6 +57,9 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
             .then(res => {
                 if(res.data.resultCode === 0) {
                     dispatch(getLoginThunkCreator())
+                } else {
+                    let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+                    dispatch(stopSubmit('login', {_error: message}))
                 }
             })
     }
@@ -66,7 +70,7 @@ export const logoutThunkCreator = (): AppThunk => {
         authAPI.logout()
             .then(res => {
                 if(res.data.resultCode === 0) {
-                    dispatch(setAuthUserData(null, null, null, false))
+                    dispatch(setAuthUserData('', null, null, false))
                 }
             })
     }
