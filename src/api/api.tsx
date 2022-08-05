@@ -32,9 +32,6 @@ export const userAPI = {
 export const authAPI = {
     getLogin() {
         return instance.get(`auth/me`)
-            .then(res => {
-                return res.data
-            })
     },
     login(email: string, password: string, rememberMe: boolean) {
         return instance.post(`auth/login`, {email, password, rememberMe})

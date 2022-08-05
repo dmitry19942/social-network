@@ -6,6 +6,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {Profile_PropsType} from "./ProfileInfo/ProfileInfo";
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type PathParamsType = {
     userId: string
@@ -35,6 +36,9 @@ export class ProfileAPIContainer extends React.Component<PropsType, AppRootState
         let userId = this.props.match.params.userId
         if(!userId) {
             userId = this.props.authorizedUserId
+            if (!userId) {
+                this.props.history.push('/login')
+            }
         }
         this.props.getProfileThunkCreator(userId)
         this.props.getStatusThunkCreator(userId)
@@ -59,5 +63,5 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator}),
     withRouter,
-    // withAuthRedirect
+    withAuthRedirect
 )(ProfileAPIContainer)
