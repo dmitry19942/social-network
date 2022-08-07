@@ -9,12 +9,20 @@ import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/users-selectors";
 
 
 type MapStateToPropsType = {
     users: UserType[]
     pageSize: number
-    totalUserCount: number
+    totalUsersCount: number
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
@@ -58,14 +66,25 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
     }
 }
 
+// const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUserCount: state.usersPage.totalUserCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress
+//     }
+// }
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUserCount: state.usersPage.totalUserCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 

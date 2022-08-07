@@ -16,7 +16,7 @@ export type UsersPropsType = {
 
 export const Users = (props: UsersPropsType) => {
 
-    // let pagesCount = Math.ceil(this.props.totalUserCount / this.props.pageSize)
+    // let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
 
     let pages = []
     for (let i = 1; i <= 10 ; i++) {
@@ -26,7 +26,7 @@ export const Users = (props: UsersPropsType) => {
     return <div>
         <div>
             {pages.map(p => {
-                return <span onClick={()=> {
+                return <span key={p.toString()} onClick={()=> {
                     props.onCurrentPageChanged(p)}} className={props.currentPage === p ? s.selectedPage : ''}>{p}</span>
             })}
 

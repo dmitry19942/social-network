@@ -22,7 +22,7 @@ export type  UserType = {
 export type InitialStateType = {
     users: UserType[]
     pageSize: number
-    totalUserCount: number
+    totalUsersCount: number
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
@@ -35,7 +35,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unk
 let initialState: InitialStateType = {
     users: [],
     pageSize: 10,
-    totalUserCount: 0,
+    totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
     followingInProgress: []
@@ -52,7 +52,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage}
         case SET_USERS_TOTAL_COUNT:
-            return {...state, totalUserCount: action.totalCount}
+            return {...state, totalUsersCount: action.totalCount}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
         case TOGGLE_IS_FOLLOWING_PROGRESS:
@@ -88,8 +88,8 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): App
 
 export const onCurrentPageChangedThunkCreator = (currentPage: number, pageSize: number): AppThunk => {
     return (dispatch: AppDispatch) => {
-        dispatch(setCurrentPage(currentPage))
         dispatch(toggleIsFetching(true))
+        dispatch(setCurrentPage(currentPage))
         userAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(toggleIsFetching(false))
