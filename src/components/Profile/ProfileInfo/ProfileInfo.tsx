@@ -1,7 +1,7 @@
 import React from "react";
 import s from './ProfileInfo.module.css';
 import {Preloader} from "../../common/Preloader/Preloader";
-import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 export type Profile_PropsType  = {
     aboutMe: string | null
@@ -33,7 +33,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
             <img src={props.profile.photos.large} alt=""/>
             <div>{props.profile.fullName}</div>
             <div>{props.profile.aboutMe}</div>
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+            <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
         </div>
     </div>
     )
