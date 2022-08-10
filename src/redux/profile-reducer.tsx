@@ -9,6 +9,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 export type  PostsType = {
     id: number
@@ -50,6 +51,8 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
             return {...state, profile: action.profile}
         case SET_STATUS:
             return {...state, status: action.status}
+        case DELETE_POST:
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         default:
             return state
     }
@@ -58,10 +61,10 @@ export const profileReducer = (state: InitialProfileStateType = initialState, ac
 export const addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfile = (profile: Profile_PropsType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 
 
-
-export type ActionTypes = ReturnType<typeof addPost> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> | ReturnType<typeof setStatus>
+export type ActionTypes = ReturnType<typeof addPost> | ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> | ReturnType<typeof setStatus> | ReturnType<typeof deletePost>
 
 export const getProfileThunkCreator = (userId: string): AppThunk => {
     return (dispatch: AppDispatch) => {

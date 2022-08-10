@@ -10,9 +10,9 @@ type FormDataType = {
     newPostText: string
 }
 
-export function MyPosts(props: MyPostsType) {
+export const MyPosts = React.memo((props: MyPostsType) => {
 
-    let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = [...props.posts].reverse().map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addNewPost = (values: FormDataType) => {
         props.addPost(values.newPostText)
@@ -22,14 +22,14 @@ export function MyPosts(props: MyPostsType) {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <AddPostReduxForm onSubmit={addNewPost} />
+                <AddPostReduxForm onSubmit={addNewPost}/>
             </div>
             <div className={s.posts}>
                 {postsElements}
             </div>
         </div>
     )
-}
+})
 
 const maxLenght30 = maxLenghtCreator(30)
 
