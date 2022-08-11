@@ -44,11 +44,13 @@ type UsersAPIComponentPropsType = {
 class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppRootStateType> {
 
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsersThunkCreator(currentPage, pageSize)
     }
 
     onCurrentPageChanged = (currentPage: number) => {
-        this.props.onCurrentPageChangedThunkCreator(currentPage, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.onCurrentPageChangedThunkCreator(currentPage, pageSize)
     }
 
     render() {

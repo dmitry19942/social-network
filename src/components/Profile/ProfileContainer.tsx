@@ -1,7 +1,7 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator} from "../../redux/profile-reducer";
+import {setUserProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator} from "../../redux/profile-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {Profile_PropsType} from "./ProfileInfo/ProfileInfo";
@@ -20,7 +20,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    getProfileThunkCreator: (userId: string) => void
+    setUserProfileThunkCreator: (userId: string) => void
     getStatusThunkCreator: (userId: string) => void
     updateStatusThunkCreator: (status: string) => void
 }
@@ -40,7 +40,7 @@ export class ProfileAPIContainer extends React.Component<PropsType, AppRootState
                 this.props.history.push('/login')
             }
         }
-        this.props.getProfileThunkCreator(userId)
+        this.props.setUserProfileThunkCreator(userId)
         this.props.getStatusThunkCreator(userId)
     }
 
@@ -61,7 +61,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator}),
+    connect(mapStateToProps, {setUserProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator}),
     withRouter,
     withAuthRedirect
 )(ProfileAPIContainer)

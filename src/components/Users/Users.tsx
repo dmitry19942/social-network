@@ -1,12 +1,14 @@
 import React from "react";
 import s from "./users.module.css";
-import userPhoto from "../../assets/images/user.jpg";
 import {UserType} from "../../redux/users-reducer";
-import { NavLink } from "react-router-dom";
+import {User} from "./User";
+
 
 export type UsersPropsType = {
     users: UserType[]
     currentPage: number
+    // totalUsersCount: number
+    // pageSize: number
     onCurrentPageChanged: (currentPage: number) => void
     followingInProgress: number[]
     followThunkCreator: (userId: number) => void
@@ -19,46 +21,26 @@ export const Users = (props: UsersPropsType) => {
     // let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
 
     let pages = []
-    for (let i = 1; i <= 10 ; i++) {
+    for (let i = 1; i <= 10; i++) {
         pages.push(i)
     }
 
     return <div>
         <div>
             {pages.map(p => {
-                return <span key={p.toString()} onClick={()=> {
-                    props.onCurrentPageChanged(p)}} className={props.currentPage === p ? s.selectedPage : ''}>{p}</span>
+                return <span key={p.toString()} onClick={() => {
+                    props.onCurrentPageChanged(p)
+                }} className={props.currentPage === p ? s.selectedPage : ''}>{p}</span>
             })}
-
         </div>
-        {
-            props.users.map(u => <div key={u.id}>
-                <span>
-                    <div>
-                        <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.userPhoto} alt=''/>
-                            </NavLink>
-                    </div>
-                    <div>
-                        { u.followed ?
-                            <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={()=> {
-                                props.unFollowThunkCreator(u.id)}
-                                }> Unfollow</button> :
-                            <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={()=> {
-                                props.followThunkCreator(u.id)}
-                            }> Follow</button> }
-
-                    </div>
-                </span>
-                <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                        <div>{'id: '}{u.id}</div>
-                    </span>
-                </span>
-            </div>)
-        }
-
+        {/*<Paginator totalUsersCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onCurrentPageChanged={props.onCurrentPageChanged} />*/}
+            {
+                props.users.map(u => <User key={u.id}
+                                           user={u}
+                                           followingInProgress={props.followingInProgress}
+                                           followThunkCreator={props.followThunkCreator}
+                                           unFollowThunkCreator={props.unFollowThunkCreator}/>
+                )
+            }
     </div>
 }
