@@ -13,7 +13,7 @@ import {
     getCurrentPage,
     getFollowingInProgress,
     getIsFetching,
-    getPageSize,
+    getPageSize, getPortionSize,
     getTotalUsersCount,
     getUsers
 } from "../../redux/users-selectors";
@@ -26,15 +26,18 @@ type MapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    portionSize: number
 }
 
 
 type UsersAPIComponentPropsType = {
     users: UserType[]
+    totalUsersCount: number
     pageSize: number
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    portionSize: number
     getUsersThunkCreator: (currentPage: number, pageSize: number) => void
     onCurrentPageChangedThunkCreator: (currentPage: number, pageSize: number) => void
     followThunkCreator: (userId: number) => void
@@ -59,10 +62,14 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
             { this.props.isFetching ? <Preloader/> : null }
             <Users users={this.props.users}
                    currentPage={this.props.currentPage}
+                   pageSize={this.props.pageSize}
+                   portionSize={this.props.portionSize}
+                   totalUsersCount={this.props.totalUsersCount}
                    onCurrentPageChanged={this.onCurrentPageChanged}
                    followingInProgress={this.props.followingInProgress}
                    followThunkCreator={this.props.followThunkCreator}
                    unFollowThunkCreator={this.props.unFollowThunkCreator}
+
             />
         </>
     }
@@ -86,7 +93,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
+        followingInProgress: getFollowingInProgress(state),
+        portionSize: getPortionSize(state)
     }
 }
 

@@ -26,6 +26,7 @@ export type InitialStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    portionSize : number
 }
 
 export type RootState = ReturnType<typeof store.getState>
@@ -38,7 +39,8 @@ let initialState: InitialStateType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: []
+    followingInProgress: [],
+    portionSize: 10
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
