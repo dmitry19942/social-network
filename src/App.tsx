@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {AppRootStateType, store} from "./redux/redux-store";
@@ -15,6 +13,12 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
+
+const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
 
 type mapStateToPropsType = {
     initialized: boolean
@@ -44,8 +48,9 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className={'app-wrapper-content'}>
-                        <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
-                        <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
+                        <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
+                        <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
+                        <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
                         <Route path={'/news'} render={() => <News/>}/>
                         <Route path={'/music'} render={() => <Music/>}/>
                         <Route path={'/settings'} render={() => <Settings/>}/>

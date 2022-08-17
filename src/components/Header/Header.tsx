@@ -8,6 +8,7 @@ export type HeaderPropsType = {
     logoutThunkCreator: () => void
 }
 
+
 export function Header(props: HeaderPropsType) {
     return <header className={s.header}>
         <img
