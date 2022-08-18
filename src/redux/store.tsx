@@ -24,7 +24,7 @@ export const store: StoreType = {
                 {id: 3, message: 'Blablabla', likesCount: 15},
                 {id: 4, message: 'Valera is the best', likesCount: 9}
             ],
-            profile: {aboutMe: null, lookingForAJob: false, lookingForAJobDescription: null, fullName: 'dmitriy199427', userId: 19481, photos: {small: '', large: ''}},
+            profile: null,
             status: ''
         },
         dialogsPage: {

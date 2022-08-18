@@ -2,6 +2,7 @@ import {AnyAction} from "redux";
 import {userAPI} from "../api/api";
 import {store} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {PhotosType} from "../components/Profile/ProfileInfo/ProfileInfo";
 
 const FOLLOW = 'SN/USERS/FOLLOW'
 const UNFOLLOW = 'SN/USERS/UNFOLLOW'
@@ -13,7 +14,7 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type  UserType = {
     id: number
-    photos: { small: string, large: string }
+    photos: PhotosType
     followed: boolean
     name: string
     status: string
