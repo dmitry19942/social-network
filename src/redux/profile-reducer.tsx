@@ -4,12 +4,14 @@ import {AnyAction} from "redux";
 import {profileAPI} from "../api/api";
 import {store} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const DELETE_POST = 'DELETE_POST'
 const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
+
 
 export type  PostsType = {
     id: number
@@ -67,6 +69,7 @@ export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as co
 export const savePhotoSuccess = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 
+
 export type ActionTypes =
     ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
@@ -96,5 +99,20 @@ export const savePhotoThunkCreator = (file: File): AppThunk => async (dispatch: 
     let res = await profileAPI.savePhoto(file)
     if (res.data.resultCode === 0) {
         dispatch(savePhotoSuccess(res.data.data.photos))
+    }
+}
+
+export const saveProfileThunkCreator = (profile: Profile_PropsType): AppThunk => async (dispatch: AppDispatch, getState) => {
+    let userId = getState().auth.id
+    let res = await profileAPI.saveProfile(profile)
+    if (res.data.resultCode === 0) {
+        if (userId !== null) {
+            dispatch(setUserProfileThunkCreator(userId))
+        } else {
+            throw new Error(`userId can't be null `)
+        }
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]}))
+        return Promise.reject(res.data.messages[0])
     }
 }
