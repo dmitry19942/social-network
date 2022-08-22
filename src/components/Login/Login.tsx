@@ -12,19 +12,25 @@ type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
+}
+
+type LoginFormOwnProps = {
+    captchaUrl: string | null
 }
 
 type mapDispatchToPropsType = {
-    loginThunkCreator: (email: string, password: string, rememberMe: boolean) => void
+    loginThunkCreator: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
 
 type mapStateToPropsType = {
     isAuth: boolean
+    captchaUrl: string | null
 }
 
 type PropsType = mapDispatchToPropsType & mapStateToPropsType
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnProps> & LoginFormOwnProps> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -36,6 +42,10 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div>
                 <Field component={Input} name={'rememberMe'} type="checkbox"/> remember me
             </div>
+
+            {props.captchaUrl && <img src={props.captchaUrl} alt=''/>}
+            {props.captchaUrl && <Field placeholder={'Symbols from image'} name={'captcha'} component={Input} validate={required}  />}
+
             {props.error && <div className={s.formSummaryError}>
                 {props.error}
             </div>}
@@ -46,23 +56,25 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => ({
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
+})
+
+const LoginReduxForm = reduxForm<FormDataType, LoginFormOwnProps>({form: 'login'})(LoginForm)
 
 const Login = (props: PropsType) => {
     const onSubmit = (formData: FormDataType) => {
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
     if (props.isAuth) {
         return <Redirect to={'/profile'} />
     }
     return <div>
         <h1>LOGIN</h1>
-        <LoginReduxForm onSubmit={onSubmit} />
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
     </div>
 }
 
-const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => ({
-    isAuth: state.auth.isAuth
-})
 
 export default connect(mapStateToProps, {loginThunkCreator})(Login)
