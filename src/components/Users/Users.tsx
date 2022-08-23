@@ -3,7 +3,7 @@ import {UserType} from "../../redux/users-reducer";
 import {User} from "./User";
 import {Paginator} from "../common/Paginator/Paginator";
 
-
+// types
 export type UsersPropsType = {
     users: UserType[]
     currentPage: number
@@ -16,8 +16,8 @@ export type UsersPropsType = {
     portionSize: number
 }
 
+// component
 export const Users = (props: UsersPropsType) => {
-
     return <div>
         <div>
             <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onCurrentPageChanged={props.onCurrentPageChanged} portionSize={props.portionSize} />

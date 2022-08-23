@@ -1,24 +1,19 @@
-import {ActionTypes} from "./profile-reducer";
-
-
+// types
 export type DialogsItemType = {
     name: string
     id: number
 }
-
 export type MessagesType = {
     id: number
     messages: string
 }
-
 export type InitialDialogsStateType = {
     dialogs: DialogsItemType[],
     messages: MessagesType[]
 }
+export type DialogsActionTypes = ReturnType<typeof sendMessage>
 
-export const SEND_MESSAGE = 'SEND-MESSAGE'
-
-
+// state
 let initialState: InitialDialogsStateType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
@@ -37,10 +32,9 @@ let initialState: InitialDialogsStateType = {
     ]
 }
 
-
-export const dialogsReducer = (state: InitialDialogsStateType = initialState, action: ActionTypes) : InitialDialogsStateType => {
+export const dialogsReducer = (state: InitialDialogsStateType = initialState, action: DialogsActionTypes) : InitialDialogsStateType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'DIALOGS/SEND_MESSAGE':
             let newMessage: MessagesType = {
                 id: new Date().getTime(),
                 messages: action.newMessageBody
@@ -51,9 +45,10 @@ export const dialogsReducer = (state: InitialDialogsStateType = initialState, ac
     }
 }
 
+// actions
 export const sendMessage = (newMessageBody: string) => {
     return {
-        type: SEND_MESSAGE, newMessageBody
+        type: 'DIALOGS/SEND_MESSAGE', newMessageBody
     } as const
 }
 

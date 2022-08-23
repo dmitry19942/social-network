@@ -4,19 +4,16 @@ import {AppRootStateType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 
-
+// types
 type MapStateToPropsType = {
     posts: PostsType[]
 }
-
 type MapDispatchToPropsType = {
     addPost: (newPostText: string) => void
 }
-
 export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
 
-
-
+// container
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts

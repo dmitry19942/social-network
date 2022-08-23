@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
@@ -14,6 +14,7 @@ import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
 
@@ -23,18 +24,25 @@ const SuspendedProfile = withSuspense(ProfileContainer)
 type mapStateToPropsType = {
     initialized: boolean
 }
-
 type MapDispatchToPropsType = {
     initializeApp: () => void
 }
-
 type AppPropsType = mapStateToPropsType & MapDispatchToPropsType
 
 
 class App extends React.Component<AppPropsType, AppRootStateType> {
 
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        alert('Some error occurred')
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillMount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -48,14 +56,17 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className={'app-wrapper-content'}>
-                        <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
-                        <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
-                        <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
-                        <Route path={'/news'} render={() => <News/>}/>
-                        <Route path={'/music'} render={() => <Music/>}/>
-                        <Route path={'/settings'} render={() => <Settings/>}/>
-                        <Route path={'/users'} render={() => <UsersContainer/>}/>
-                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Switch>
+                            <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
+                            <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
+                            <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
+                            <Route path={'/users'} render={() => <UsersContainer/>}/>
+                            <Route path={'/login'} render={() => <Login/>}/>
+                            <Route path={'/news'} render={() => <News/>}/>
+                            <Route path={'/music'} render={() => <Music/>}/>
+                            <Route path={'/settings'} render={() => <Settings/>}/>
+                            <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
+                        </Switch>
                     </div>
                 </div>
             </BrowserRouter>

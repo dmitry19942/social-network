@@ -4,7 +4,7 @@ import userPhoto from "../../assets/images/user.jpg";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
 
-
+// types
 export type UserPropsType = {
     user: UserType
     followingInProgress: number[]
@@ -13,6 +13,7 @@ export type UserPropsType = {
 
 }
 
+// component
 export const User = (props: UserPropsType) => {
     return (
         <div>
@@ -32,7 +33,6 @@ export const User = (props: UserPropsType) => {
                                 props.followThunkCreator(props.user.id)
                             }
                             }> Follow</button>}
-
                     </div>
                 </span>
             <span>

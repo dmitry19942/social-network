@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import s from './Paginator.module.css';
 import cn from 'classnames'
 
+// types
 export type PaginatorPropsType = {
     totalItemsCount: number
     pageSize: number
@@ -10,6 +11,7 @@ export type PaginatorPropsType = {
     portionSize: number
 }
 
+// component
 export const Paginator = (props: PaginatorPropsType) => {
 
     let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize)

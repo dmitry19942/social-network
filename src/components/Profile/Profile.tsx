@@ -2,6 +2,7 @@ import React from "react";
 import {Profile_PropsType, ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
+// types
 type ProfilePropsType = {
     profile: Profile_PropsType | null
     status: string
@@ -11,8 +12,8 @@ type ProfilePropsType = {
     saveProfile: (profile: Profile_PropsType) => Promise<any>
 }
 
+// component
 export function Profile(props: ProfilePropsType) {
-
     return <div>
         <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} savePhoto={props.savePhoto} saveProfile={props.saveProfile}/>
         <MyPostsContainer />

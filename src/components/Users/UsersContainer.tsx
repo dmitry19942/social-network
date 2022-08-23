@@ -18,7 +18,7 @@ import {
     getUsers
 } from "../../redux/users-selectors";
 
-
+// types
 type MapStateToPropsType = {
     users: UserType[]
     pageSize: number
@@ -28,8 +28,6 @@ type MapStateToPropsType = {
     followingInProgress: number[]
     portionSize: number
 }
-
-
 type UsersAPIComponentPropsType = {
     users: UserType[]
     totalUsersCount: number
@@ -44,6 +42,7 @@ type UsersAPIComponentPropsType = {
     unFollowThunkCreator: (userId: number) => void
 }
 
+// component
 class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppRootStateType> {
 
     componentDidMount() {
@@ -57,9 +56,8 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
     }
 
     render() {
-
         return <>
-            { this.props.isFetching ? <Preloader/> : null }
+            {this.props.isFetching ? <Preloader/> : null}
             <Users users={this.props.users}
                    currentPage={this.props.currentPage}
                    pageSize={this.props.pageSize}
@@ -69,22 +67,10 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
                    followingInProgress={this.props.followingInProgress}
                    followThunkCreator={this.props.followThunkCreator}
                    unFollowThunkCreator={this.props.unFollowThunkCreator}
-
             />
         </>
     }
 }
-
-// const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUserCount: state.usersPage.totalUserCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress
-//     }
-// }
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
@@ -98,8 +84,12 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 
-
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { getUsersThunkCreator, onCurrentPageChangedThunkCreator, followThunkCreator, unFollowThunkCreator})
+    connect(mapStateToProps, {
+        getUsersThunkCreator,
+        onCurrentPageChangedThunkCreator,
+        followThunkCreator,
+        unFollowThunkCreator
+    })
 )(UsersAPIComponent)
 

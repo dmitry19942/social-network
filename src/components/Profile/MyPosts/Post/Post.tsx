@@ -1,11 +1,13 @@
 import React from "react";
 import s from './Post.module.css';
 
+// types
 type PostType = {
     message: string
     likesCount: number
 }
 
+// component
 export function Post(props: PostType) {
     return (
         <div className={s.item}>

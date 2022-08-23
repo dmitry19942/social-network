@@ -13,17 +13,16 @@ import {Profile_PropsType} from "./ProfileInfo/ProfileInfo";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
+// types
 type PathParamsType = {
     userId: string
 }
-
 type MapStateToPropsType = {
     profile: Profile_PropsType | null
     status: string
     authorizedUserId: string
     isAuth: boolean
 }
-
 type MapDispatchToPropsType = {
     setUserProfileThunkCreator: (userId: string) => void
     getStatusThunkCreator: (userId: string) => void
@@ -31,12 +30,10 @@ type MapDispatchToPropsType = {
     savePhotoThunkCreator: (file: File) => void
     saveProfileThunkCreator: (profile: Profile_PropsType) => Promise<any>
 }
-
-
 type ProfileAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
-
 type PropsType = RouteComponentProps<PathParamsType> & ProfileAPIContainerPropsType
 
+// component
 export class ProfileAPIContainer extends React.Component<PropsType, AppRootStateType> {
 
     refreshProfile() {
@@ -74,14 +71,12 @@ export class ProfileAPIContainer extends React.Component<PropsType, AppRootState
     }
 }
 
-
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.id,
     isAuth: state.auth.isAuth
 })
-
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {setUserProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhotoThunkCreator, saveProfileThunkCreator}),

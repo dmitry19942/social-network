@@ -1,10 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 
+// types
 type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string) => void
 }
 
+// component
 export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     let [editMode, setEditMode] = useState<boolean>(false)

@@ -8,28 +8,26 @@ import {Redirect} from "react-router-dom";
 import {AppRootStateType} from "../../redux/redux-store";
 import s from '../common/FormControls/FormControls.module.css'
 
+// types
 type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
     captcha: string
 }
-
 type LoginFormOwnProps = {
     captchaUrl: string | null
 }
-
 type mapDispatchToPropsType = {
     loginThunkCreator: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
-
 type mapStateToPropsType = {
     isAuth: boolean
     captchaUrl: string | null
 }
-
 type PropsType = mapDispatchToPropsType & mapStateToPropsType
 
+// component
 export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnProps> & LoginFormOwnProps> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
@@ -42,7 +40,6 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnPro
             <div>
                 <Field component={Input} name={'rememberMe'} type="checkbox"/> remember me
             </div>
-
             {props.captchaUrl && <img src={props.captchaUrl} alt=''/>}
             {props.captchaUrl && <Field placeholder={'Symbols from image'} name={'captcha'} component={Input} validate={required}  />}
 
@@ -75,6 +72,5 @@ const Login = (props: PropsType) => {
         <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
     </div>
 }
-
 
 export default connect(mapStateToProps, {loginThunkCreator})(Login)

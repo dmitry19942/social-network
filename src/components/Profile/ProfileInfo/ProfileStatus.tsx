@@ -1,15 +1,16 @@
 import React, {ChangeEvent} from "react";
 
+// types
 type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string) => void
 }
-
 type StateType = {
     editMode: boolean
     status: string
 }
 
+// component
 export class ProfileStatus extends React.Component<ProfileStatusPropsType, StateType> {
 
     state = {

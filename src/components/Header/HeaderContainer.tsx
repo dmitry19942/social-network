@@ -4,18 +4,17 @@ import {connect} from "react-redux";
 import {logoutThunkCreator} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 
-
+// types
 type MapStateToPropsType = {
     isAuth: boolean
     login: string | null
 }
-
 type MapDispatchToPropsType = {
     logoutThunkCreator: () => void
 }
-
 type HeaderAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
+// component
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType, AppRootStateType> {
 
     render() {

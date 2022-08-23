@@ -5,12 +5,13 @@ import s from './../../common/FormControls/FormControls.module.css'
 import {createField, GetStringKeys, Input, Textarea} from "../../common/FormControls/FormControls";
 import {required} from "../../../utils/validators";
 
+// types
 type PropsType = {
     profile: Profile_PropsType
 }
-
 type ProfileTypeKeys = GetStringKeys<Profile_PropsType>
 
+// component
 const ProfileDataForm: React.FC<InjectedFormProps<Profile_PropsType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
     return <form onSubmit={handleSubmit}>
         <div><button>save</button></div>
