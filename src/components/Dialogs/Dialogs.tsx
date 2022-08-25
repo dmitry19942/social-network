@@ -20,7 +20,10 @@ export const Dialogs = (props: DialogsPropsType) => {
 
 
     let addNewMessage = (values: FormDataType) => {
-        props.sendMessage(values.newMessageBody)
+        if (values.newMessageBody.trim() !== '') {
+            props.sendMessage(values.newMessageBody.trim())
+            values.newMessageBody = ''
+        }
     }
 
     return (

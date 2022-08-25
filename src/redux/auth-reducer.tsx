@@ -4,7 +4,7 @@ import {AppDispatch, AppThunk} from "./redux-store";
 
 // types
 export type InitialStateType = {
-    id: string
+    id: number | null
     email: string | null
     login: string | null
     isAuth: boolean,
@@ -14,7 +14,7 @@ export type AuthActionTypes = ReturnType<typeof setAuthUserData> | ReturnType<ty
 
 // state
 let initialState: InitialStateType = {
-    id: '',
+    id: null,
     email: null,
     login: null,
     isAuth: false,
@@ -32,7 +32,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 }
 
 // actions
-export const setAuthUserData = (id: string, email: string | null, login: string | null, isAuth: boolean) => ({type: 'AUTH/SET_AUTH_USER_DATA', payload: {id, email, login, isAuth}} as const)
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: 'AUTH/SET_AUTH_USER_DATA', payload: {id, email, login, isAuth}} as const)
 export const getCaptchaUrl = (captchaUrl: string) => ({type: 'AUTH/GET_CAPTCHA_URL_SUCCESS', payload: {captchaUrl}} as const)
 
 // thunks
@@ -46,6 +46,7 @@ export const getLoginThunkCreator = (): AppThunk => async (dispatch: AppDispatch
 }
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string): AppThunk => async (dispatch: AppDispatch) => {
     let res = await authAPI.login(email, password, rememberMe, captcha)
+    debugger
     if (res.data.resultCode === 0) {
         dispatch(getLoginThunkCreator())
     } else {
@@ -64,6 +65,6 @@ export const getCaptchaUrlThunkCreator = (): AppThunk => async (dispatch: AppDis
 export const logoutThunkCreator = (): AppThunk => async (dispatch: AppDispatch) => {
     let res = await authAPI.logout()
     if (res.data.resultCode === 0) {
-        dispatch(setAuthUserData('', null, null, false))
+        dispatch(setAuthUserData(null, null, null, false))
     }
 }

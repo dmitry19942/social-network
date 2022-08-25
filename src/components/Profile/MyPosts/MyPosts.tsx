@@ -13,18 +13,20 @@ type FormDataType = {
 
 // component
 export const MyPosts = React.memo((props: MyPostsType) => {
-
     let postsElements = [...props.posts].reverse().map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addNewPost = (values: FormDataType) => {
-        props.addPost(values.newPostText)
+        if (values.newPostText.trim() !== '') {
+            props.addPost(values.newPostText.trim())
+            values.newPostText = ''
+        }
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <AddPostReduxForm onSubmit={addNewPost}/>
+                <AddPostReduxForm onSubmit={addNewPost} />
             </div>
             <div className={s.posts}>
                 {postsElements}
@@ -40,7 +42,7 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength30]}/>
+                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength30]} />
             </div>
             <div>
                 <button>Add post</button>
@@ -48,6 +50,7 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         </form>
     )
 }
+
 
 const AddPostReduxForm = reduxForm<FormDataType>({form: 'profileAddPostForm'})(AddPostForm)
 

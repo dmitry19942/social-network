@@ -63,11 +63,11 @@ export const deletePost = (postId: number) => ({type: 'PROFILE/DELETE-POST', pos
 export const savePhotoSuccess = (photos: PhotosType) => ({type: 'PROFILE/SAVE-PHOTO-SUCCESS', photos} as const)
 
 // thunks
-export const setUserProfileThunkCreator = (userId: string): AppThunk => async (dispatch: AppDispatch) => {
+export const setUserProfileThunkCreator = (userId: number): AppThunk => async (dispatch: AppDispatch) => {
     let res = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(res.data))
 }
-export const getStatusThunkCreator = (userId: string): AppThunk => async (dispatch: AppDispatch) => {
+export const getStatusThunkCreator = (userId: number): AppThunk => async (dispatch: AppDispatch) => {
     let res = await profileAPI.getStatus(userId)
     dispatch(setStatus(res.data))
 }
@@ -90,7 +90,7 @@ export const saveProfileThunkCreator = (profile: Profile_PropsType): AppThunk =>
         if (userId !== null) {
             dispatch(setUserProfileThunkCreator(userId))
         } else {
-            throw new Error(`userId can't be null `)
+            throw new Error(`userId can't be null`)
         }
     } else {
         dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]}))
