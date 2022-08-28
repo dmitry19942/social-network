@@ -1,6 +1,8 @@
-import {userAPI} from "../api/api";
+import {APIResponseType} from "../api/api";
 import {PhotosType} from "../components/Profile/ProfileInfo/ProfileInfo";
 import {AppDispatch, AppThunk} from "./redux-store";
+import {updateObjectInArray} from "../utils/object-helpers";
+import { userAPI } from "../api/users-api";
 
 // types
 export type  UserType = {
@@ -17,10 +19,9 @@ export type InitialStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
-    portionSize : number
 }
 export type UsersActionTypes =
-    ReturnType<typeof follow>
+    | ReturnType<typeof follow>
     | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
@@ -36,15 +37,14 @@ let initialState: InitialStateType = {
     currentPage: 1,
     isFetching: false,
     followingInProgress: [],
-    portionSize: 10
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: UsersActionTypes): InitialStateType => {
     switch (action.type) {
         case 'USERS/FOLLOW':
-            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
+            return {...state, users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})}
         case 'USERS/UNFOLLOW':
-            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)}
+            return {...state, users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})}
         case 'USERS/SET_USERS':
             return {...state, users: action.users}
         case 'USERS/SET_CURRENT_PAGE':
@@ -89,10 +89,10 @@ export const onCurrentPageChangedThunkCreator = (currentPage: number, pageSize: 
     dispatch(toggleIsFetching(false))
     dispatch(setUsers(data.items))
 }
-const followUnfollowFlow = async (dispatch: AppDispatch, userId: number, apiMethod: any, actionCreator: (userId: number) => UsersActionTypes) => {
+const followUnfollowFlow = async (dispatch: AppDispatch, userId: number, apiMethod: (userId: number) => Promise<APIResponseType>, actionCreator: (userId: number) => UsersActionTypes) => {
     dispatch(toggleIsFollowingProgress(true, userId))
-    let data = await apiMethod(userId)
-    if (data.resultCode === 0) {
+    let response = await apiMethod(userId)
+    if (response.resultCode === 0 ) {
         dispatch(actionCreator(userId))
     }
     dispatch(toggleIsFollowingProgress(false, userId))

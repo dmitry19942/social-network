@@ -1,10 +1,11 @@
-import React from "react";
+import React, {KeyboardEvent} from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {MyPostsType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators";
 import {Textarea} from "../../common/FormControls/FormControls";
+import {addPost} from "../../../redux/profile-reducer";
 
 // types
 type FormDataType = {
@@ -38,11 +39,19 @@ export const MyPosts = React.memo((props: MyPostsType) => {
 const maxLength30 = maxLengthCreator(30)
 
 const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    const onClickHandler = () => {
+
+    }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            onClickHandler()
+        }
+    }
 
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength30]} />
+                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength30]} onKeyPress={onKeyPressHandler} />
             </div>
             <div>
                 <button>Add post</button>
@@ -50,7 +59,6 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         </form>
     )
 }
-
 
 const AddPostReduxForm = reduxForm<FormDataType>({form: 'profileAddPostForm'})(AddPostForm)
 

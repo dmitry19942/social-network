@@ -13,14 +13,13 @@ export type UsersPropsType = {
     followingInProgress: number[]
     followThunkCreator: (userId: number) => void
     unFollowThunkCreator: (userId: number) => void
-    portionSize: number
 }
 
 // component
 export const Users = (props: UsersPropsType) => {
     return <div>
         <div>
-            <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onCurrentPageChanged={props.onCurrentPageChanged} portionSize={props.portionSize} />
+            <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onCurrentPageChanged={props.onCurrentPageChanged} />
         </div>
             {
                 props.users.map(u => <User key={u.id}

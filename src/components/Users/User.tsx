@@ -10,7 +10,6 @@ export type UserPropsType = {
     followingInProgress: number[]
     followThunkCreator: (userId: number) => void
     unFollowThunkCreator: (userId: number) => void
-
 }
 
 // component

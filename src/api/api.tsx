@@ -3,7 +3,7 @@ import {PhotosType, Profile_PropsType} from "../components/Profile/ProfileInfo/P
 import {UserType} from "../redux/users-reducer";
 
 // types
-type GetItemsType = {
+export type GetItemsType = {
     items: UserType[]
     error: null | string
     totalCount: number
@@ -15,7 +15,7 @@ export enum ResultCodesEnum {
 export enum ResultCodeForCaptchaEnum {
     CaptchaIsRequired = 10
 }
-type APIResponseType<D = {}, RC = ResultCodesEnum> = {
+export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
     data: D
     messages : Array<string>
     fieldsErrors: Array<string>
@@ -37,34 +37,13 @@ type GetCaptchaUrlResponseType = {
 }
 
 // instance
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {'API-KEY': 'a1c29d8b-1c83-4c49-8a4c-55a3c1e75564'},
-
 })
 
 // api
-export const userAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
-            .then(res => {
-                return res.data
-            })
-    },
-    deleteFollow(userId: number) {
-        return instance.delete<APIResponseType>(`follow/${userId}`)
-            .then(res => {
-                return res.data
-            })
-    },
-    postFollow(userId: number) {
-        return instance.post<APIResponseType>(`follow/${userId}`)
-            .then(res => {
-                return res.data
-            })
-    }
-}
 
 export const authAPI = {
     getLogin() {
