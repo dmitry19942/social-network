@@ -1,8 +1,8 @@
 import {APIResponseType, GetItemsType, instance} from "./api";
 
 export const userAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number, pageSize: number, term: string = '') {
+        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
             .then(res => res.data)
     },
     deleteFollow(userId: number) {

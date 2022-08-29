@@ -1,7 +1,8 @@
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {
-    followThunkCreator, getUsersThunkCreator, onCurrentPageChangedThunkCreator,
+    FilterType,
+    followThunkCreator, requestUsersThunkCreator,
     unFollowThunkCreator,
     UserType
 } from "../../redux/users-reducer";
@@ -15,7 +16,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsers, getUsersFilter
 } from "../../redux/users-selectors";
 
 // types
@@ -26,6 +27,7 @@ type MapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    filter: FilterType
 }
 type UsersAPIComponentPropsType = {
     users: UserType[]
@@ -34,8 +36,8 @@ type UsersAPIComponentPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
-    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
-    onCurrentPageChangedThunkCreator: (currentPage: number, pageSize: number) => void
+    filter: FilterType
+    requestUsersThunkCreator: (currentPage: number, pageSize: number, term: string) => void
     followThunkCreator: (userId: number) => void
     unFollowThunkCreator: (userId: number) => void
 }
@@ -45,12 +47,17 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
 
     componentDidMount() {
         const {currentPage, pageSize} = this.props
-        this.props.getUsersThunkCreator(currentPage, pageSize)
+        this.props.requestUsersThunkCreator(currentPage, pageSize, '')
     }
 
     onCurrentPageChanged = (currentPage: number) => {
+        const {pageSize, filter} = this.props
+        this.props.requestUsersThunkCreator(currentPage, pageSize, filter.term)
+    }
+
+    onFilterChanged = (filter: FilterType) => {
         const {pageSize} = this.props
-        this.props.onCurrentPageChangedThunkCreator(currentPage, pageSize)
+        this.props.requestUsersThunkCreator(1, pageSize, filter.term)
     }
 
     render() {
@@ -64,6 +71,7 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppR
                    followingInProgress={this.props.followingInProgress}
                    followThunkCreator={this.props.followThunkCreator}
                    unFollowThunkCreator={this.props.unFollowThunkCreator}
+                   onFilterChanged={this.onFilterChanged}
             />
         </>
     }
@@ -77,13 +85,13 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+        filter: getUsersFilter(state)
     }
 }
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-        getUsersThunkCreator,
-        onCurrentPageChangedThunkCreator,
+        requestUsersThunkCreator,
         followThunkCreator,
         unFollowThunkCreator
     })
