@@ -37,7 +37,7 @@ type UsersAPIComponentPropsType = {
     isFetching: boolean
     followingInProgress: number[]
     filter: FilterType
-    requestUsersThunkCreator: (currentPage: number, pageSize: number, term: string) => void
+    requestUsersThunkCreator: (currentPage: number, pageSize: number, filter: FilterType) => void
     followThunkCreator: (userId: number) => void
     unFollowThunkCreator: (userId: number) => void
 }
@@ -46,18 +46,18 @@ type UsersAPIComponentPropsType = {
 class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType, AppRootStateType> {
 
     componentDidMount() {
-        const {currentPage, pageSize} = this.props
-        this.props.requestUsersThunkCreator(currentPage, pageSize, '')
+        const {currentPage, pageSize, filter} = this.props
+        this.props.requestUsersThunkCreator(currentPage, pageSize, filter)
     }
 
     onCurrentPageChanged = (currentPage: number) => {
         const {pageSize, filter} = this.props
-        this.props.requestUsersThunkCreator(currentPage, pageSize, filter.term)
+        this.props.requestUsersThunkCreator(currentPage, pageSize, filter)
     }
 
     onFilterChanged = (filter: FilterType) => {
         const {pageSize} = this.props
-        this.props.requestUsersThunkCreator(1, pageSize, filter.term)
+        this.props.requestUsersThunkCreator(1, pageSize, filter)
     }
 
     render() {

@@ -23,6 +23,7 @@ export type InitialStateType = {
 }
 export type FilterType = {
     term: string
+    friend: null | boolean
 }
 export type UsersActionTypes =
     | ReturnType<typeof follow>
@@ -43,7 +44,8 @@ let initialState: InitialStateType = {
     isFetching: false,
     followingInProgress: [],
     filter: {
-        term: ''
+        term: '',
+        friend: null
     }
 }
 
@@ -79,18 +81,18 @@ export const follow = (userId: number) => ({type: 'USERS/FOLLOW', userId} as con
 export const unfollow = (userId: number) => ({type: 'USERS/UNFOLLOW', userId} as const)
 export const setUsers = (users: UserType[]) => ({type: 'USERS/SET_USERS', users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: 'USERS/SET_CURRENT_PAGE', currentPage} as const)
-export const setFilter = (term: string) => ({type: 'USERS/SET_FILTER', payload: {term}} as const)
+export const setFilter = (filter: FilterType) => ({type: 'USERS/SET_FILTER', payload: filter} as const)
 export const setUsersTotalCount = (totalCount: number) => ({type: 'USERS/SET_USERS_TOTAL_COUNT', totalCount} as const)
 export const toggleIsFetching = (isFetching: boolean) => ({type: 'USERS/TOGGLE_IS_FETCHING', isFetching} as const)
 export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) => ({
     type: 'USERS/TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId} as const)
 
 // thunks
-export const requestUsersThunkCreator = (currentPage: number, pageSize: number, term: string): AppThunk => async (dispatch: AppDispatch) => {
+export const requestUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(toggleIsFetching(true))
     dispatch(setCurrentPage(currentPage))
-    dispatch(setFilter(term))
-    let data = await userAPI.getUsers(currentPage, pageSize, term)
+    dispatch(setFilter(filter))
+    let data = await userAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
     dispatch(toggleIsFetching(false))
     dispatch(setUsers(data.items))
     dispatch(setUsersTotalCount(data.totalCount))
