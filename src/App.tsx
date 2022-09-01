@@ -5,15 +5,15 @@ import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-d
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import UsersContainer from "./components/Users/UsersContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {AppRootStateType, store} from "./redux/redux-store";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import {UsersPage} from "./components/Users/UsersContainer";
+import {Login} from "./components/Login/Login";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
@@ -60,7 +60,7 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                             <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
                             <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
                             <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
-                            <Route path={'/users'} render={() => <UsersContainer/>}/>
+                            <Route path={'/users'} render={() => <UsersPage/>}/>
                             <Route path={'/login'} render={() => <Login/>}/>
                             <Route path={'/news'} render={() => <News/>}/>
                             <Route path={'/music'} render={() => <Music/>}/>
