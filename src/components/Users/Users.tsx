@@ -12,6 +12,10 @@ import {
     getUsers,
     getUsersFilter
 } from "../../redux/users-selectors";
+import {useHistory} from "react-router-dom";
+import * as queryString from "querystring";
+
+type QueryParamsType = { term?: string, page?: string, friend?: string };
 
 // component
 export const Users = () => {
@@ -23,10 +27,45 @@ export const Users = () => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
-        dispatch(requestUsersThunkCreator(currentPage, pageSize, filter))
+
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+
+        switch (parsed.friend) {
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+        }
+
+        dispatch(requestUsersThunkCreator(actualPage, pageSize, actualFilter))
     }, [])
+
+    useEffect(() => {
+        const query: QueryParamsType = {}
+
+        if (!!filter.term) query.term = filter.term
+        if (!!filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+        
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
 
     const onCurrentPageChanged = (currentPage: number) => {
         dispatch(requestUsersThunkCreator(currentPage, pageSize, filter))
