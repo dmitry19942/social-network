@@ -3,7 +3,6 @@ import {Profile_PropsType} from "./ProfileInfo";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import s from './../../common/FormControls/FormControls.module.css'
 import {createField, GetStringKeys, Input, Textarea} from "../../common/FormControls/FormControls";
-import {required} from "../../../utils/validators";
 
 // types
 type PropsType = {
