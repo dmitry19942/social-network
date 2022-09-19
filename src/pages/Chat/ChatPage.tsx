@@ -1,18 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    ChatMessageAPIType,
     sendMessageThunkCreator,
     startMessagesListeningThunkCreator,
     stopMessagesListeningThunkCreator
 } from "../../redux/chat-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
-
-export type ChatMessageType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
 
 const ChatPage: React.FC = () => {
     return <div>
@@ -42,20 +36,38 @@ const Chat: React.FC = () => {
 
 const Messages: React.FC = () => {
     const messages = useSelector((state: AppRootStateType) => state.chat.messages)
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
+
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const element = e.currentTarget
+        if (Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 300) {
+            !isAutoScroll && setIsAutoScroll(true)
+        } else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
+
+    useEffect(() => {
+        if (isAutoScroll) {
+            messagesAnchorRef.current?.scrollIntoView({block: 'end', behavior: 'smooth'})
+        }
+    }, [messages])
 
     return <div style={{height: '400px', overflow: 'auto'}}>
-        {messages.map((m, index) => <Message key={index} message={m} />)}
+        {messages.map((m, index) => <Message key={m.id} message={m} />)}
+        <div ref={messagesAnchorRef}></div>
     </div>
 }
 
-const Message: React.FC<{message: ChatMessageType}> = ({message}) => {
+const Message: React.FC<{message: ChatMessageAPIType}> = React.memo( ({message}) => {
     return <div>
         <img src={message.photo} style={{width: '30px'}} alt=''/> <b>{message.userName}</b>
         <br/>
         {message.message}
         <hr/>
     </div>
-}
+})
 
 const AddMessageForm: React.FC = () => {
     const [message, setMessage] = useState('')

@@ -1,7 +1,6 @@
-import {ChatMessageType} from "../pages/Chat/ChatPage";
-import {StatusType} from "../redux/chat-reducer";
+import {ChatMessageAPIType, StatusType} from "../redux/chat-reducer";
 
-type MessagesReceivedSubscriberType = (messages: ChatMessageType[]) => void
+type MessagesReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void
 type StatusChangedSubscriberType = (status: StatusType) => void
 type EventsNamesType = 'messages-received' | 'status-changed'
 
