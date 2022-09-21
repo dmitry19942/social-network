@@ -62,7 +62,7 @@ export const Users = () => {
         if (currentPage !== 1) query.page = String(currentPage)
         
         history.push({
-            pathname: '/users',
+            pathname: '/social-network/users',
             search: queryString.stringify(query)
         })
     }, [filter, currentPage])

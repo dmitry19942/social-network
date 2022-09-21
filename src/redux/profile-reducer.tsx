@@ -1,7 +1,7 @@
 import {PhotosType, Profile_PropsType} from "../components/Profile/ProfileInfo/ProfileInfo";
-import {profileAPI} from "../api/api";
 import {AppDispatch, AppThunk} from "./redux-store";
 import {stopSubmit} from "redux-form";
+import {profileAPI} from "../api/profile-api";
 
 // types
 export type  PostsType = {

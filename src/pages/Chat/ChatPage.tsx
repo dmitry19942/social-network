@@ -8,7 +8,7 @@ import {
 } from "../../redux/chat-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 
-const ChatPage: React.FC = () => {
+export const ChatPage: React.FC = () => {
     return <div>
         <Chat />
     </div>

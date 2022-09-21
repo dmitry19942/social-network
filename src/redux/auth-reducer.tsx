@@ -1,6 +1,7 @@
-import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {AppDispatch, AppThunk} from "./redux-store";
+import {authAPI} from "../api/auth-api";
+import {securityAPI} from "../api/security-api";
 
 // types
 export type InitialStateType = {

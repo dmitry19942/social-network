@@ -76,19 +76,19 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                                 style={{height: '100%'}}
                             >
                                 <SubMenu key="sub1" icon={<UserOutlined/>} title="My Profile">
-                                    <Menu.Item key="1"> <Link to="/profile">Profile</Link></Menu.Item>
-                                    <Menu.Item key="2"> <Link to="/dialogs">Messages</Link></Menu.Item>
+                                    <Menu.Item key="1"> <Link to="/social-network/profile">Profile</Link></Menu.Item>
+                                    <Menu.Item key="2"> <Link to="/social-network/dialogs">Messages</Link></Menu.Item>
                                     <Menu.Item key="3">option3</Menu.Item>
                                     <Menu.Item key="4">option4</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Developers">
-                                    <Menu.Item key="5"><Link to="/users">Developers</Link></Menu.Item>
+                                    <Menu.Item key="5"><Link to="/social-network/users">Developers</Link></Menu.Item>
                                     <Menu.Item key="6">option6</Menu.Item>
                                     <Menu.Item key="7">option7</Menu.Item>
                                     <Menu.Item key="8">option8</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub3" icon={<NotificationOutlined/>} title="Chat">
-                                    <Menu.Item key="9"><Link to="/chat">Chat</Link></Menu.Item>
+                                    <Menu.Item key="9"><Link to="/social-network/chat">Chat</Link></Menu.Item>
                                     <Menu.Item key="10">option10</Menu.Item>
                                     <Menu.Item key="11">option11</Menu.Item>
                                     <Menu.Item key="12">option12</Menu.Item>
@@ -97,15 +97,15 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                         </Sider>
                         <Content style={{padding: '0 24px', minHeight: 280}}>
                             <Switch>
-                                <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
-                                <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
-                                <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
-                                <Route path={'/users'} render={() => <UsersPage/>}/>
-                                <Route path={'/login'} render={() => <Login/>}/>
-                                <Route path={'/news'} render={() => <News/>}/>
-                                <Route path={'/music'} render={() => <Music/>}/>
-                                <Route path={'/settings'} render={() => <Settings/>}/>
-                                <Route path={'/chat'} render={() => <SuspendedChatPage/>}/>
+                                <Route exact path='/' render={() => <Redirect to={'/social-network/profile'}/>}/>
+                                <Route path={'/social-network/profile/:userId?'} render={() => <SuspendedProfile/>}/>
+                                <Route path={'/social-network/dialogs'} render={() => <SuspendedDialogs/>}/>
+                                <Route path={'/social-network/users'} render={() => <UsersPage/>}/>
+                                <Route path={'/social-network/login'} render={() => <Login/>}/>
+                                <Route path={'/social-network/news'} render={() => <News/>}/>
+                                <Route path={'/social-network/music'} render={() => <Music/>}/>
+                                <Route path={'/social-network/settings'} render={() => <Settings/>}/>
+                                <Route path={'/social-network/chat'} render={() => <SuspendedChatPage/>}/>
                                 <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
                             </Switch>
                         </Content>
@@ -113,25 +113,6 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                 </Content>
                 <Footer style={{textAlign: 'center'}}>Social Network ©2022 Created by dmitriy19942</Footer>
             </Layout>
-            // <BrowserRouter>
-            //     <div className={'app-wrapper'}>
-            //         <HeaderContainer/>
-            //         <Navbar/>
-            //         <div className={'app-wrapper-content'}>
-            //             <Switch>
-            //                 <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
-            //                 <Route path={'/profile/:userId?'} render={() => <SuspendedProfile/>}/>
-            //                 <Route path={'/dialogs'} render={() => <SuspendedDialogs/>}/>
-            //                 <Route path={'/users'} render={() => <UsersPage/>}/>
-            //                 <Route path={'/login'} render={() => <Login/>}/>
-            //                 <Route path={'/news'} render={() => <News/>}/>
-            //                 <Route path={'/music'} render={() => <Music/>}/>
-            //                 <Route path={'/settings'} render={() => <Settings/>}/>
-            //                 <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
-            //             </Switch>
-            //         </div>
-            //     </div>
-            // </BrowserRouter>
         )
     }
 }

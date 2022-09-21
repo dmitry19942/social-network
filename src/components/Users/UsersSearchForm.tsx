@@ -4,6 +4,7 @@ import {FilterType} from "../../redux/users-reducer";
 import {useSelector} from "react-redux";
 import {getUsersFilter} from "../../redux/users-selectors";
 
+// types
 type UsersSearchFormType = {
     onFilterChanged: (filter: FilterType) => void
 }
@@ -13,6 +14,7 @@ type FormType = {
     friend: FriendFormType
 }
 
+// component
 export const UsersSearchForm = (props: UsersSearchFormType) => {
 
     const filter = useSelector(getUsersFilter)
@@ -20,7 +22,7 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
     const submit = (values: FormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
         const filter: FilterType = {
             term: values.term,
-            friend: values.friend === 'null' ? null : values.friend === 'true' ? true : false
+            friend: values.friend === 'null' ? null : values.friend === 'true'
 
         }
         props.onFilterChanged(filter)
@@ -28,8 +30,7 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
     }
 
     const usersSearchFormValidate = (values: any) => {
-        const errors = {}
-        return errors
+        return {}
     }
 
     return <div>
@@ -51,7 +52,6 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
                     </button>
                 </Form>
             )}
-
         </Formik>
     </div>
 }

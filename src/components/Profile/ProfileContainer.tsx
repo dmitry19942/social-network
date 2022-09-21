@@ -41,7 +41,7 @@ export class ProfileAPIContainer extends React.Component<PropsType, AppRootState
         if(!userId) {
             userId = this.props.authorizedUserId
             if (!userId) {
-                this.props.history.push('/login')
+                this.props.history.push('/social-network/login')
             }
         }
         this.props.setUserProfileThunkCreator(userId)

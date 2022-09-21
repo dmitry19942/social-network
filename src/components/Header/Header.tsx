@@ -26,7 +26,7 @@ export function Header(props: HeaderPropsType) {
         <Row>
             <Col span={18}>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="1"><Link to="/users">Developers</Link></Menu.Item>
+                    <Menu.Item key="1"><Link to="/social-network/users">Developers</Link></Menu.Item>
                 </Menu>
             </Col>
 
@@ -40,7 +40,7 @@ export function Header(props: HeaderPropsType) {
                 </>
                 : <Col span={6}>
                     <Button>
-                        <Link to={'/login'}>Login</Link>
+                        <Link to={'/social-network/login'}>Login</Link>
                     </Button>
                 </Col>}
         </Row>

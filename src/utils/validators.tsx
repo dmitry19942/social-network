@@ -8,7 +8,6 @@ export const required: FieldValidatorType = (value) => {
     } else {
         return undefined
     }
-
 }
 
 export const maxLengthCreator = (maxLength: number): FieldValidatorType => (value) => {

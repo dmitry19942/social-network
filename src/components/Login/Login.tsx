@@ -57,7 +57,7 @@ export const Login = () => {
         dispatch(loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
     if (isAuth) {
-        return <Redirect to={'/profile'} />
+        return <Redirect to={'/social-network/profile'} />
     }
     return <div>
         <h1>LOGIN</h1>

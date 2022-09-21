@@ -1,5 +1,6 @@
 import {ChatMessageAPIType, StatusType} from "../redux/chat-reducer";
 
+// types
 type MessagesReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void
 type StatusChangedSubscriberType = (status: StatusType) => void
 type EventsNamesType = 'messages-received' | 'status-changed'
@@ -9,6 +10,7 @@ let subscribers = {
     'status-changed': [] as StatusChangedSubscriberType[]
 }
 
+// function
 let ws: WebSocket | null = null
 const closeHandler = () => {
     notifySubscribersAboutStatus('pending')
@@ -49,6 +51,7 @@ function createChannel() {
     ws.addEventListener('error', errorHandler)
 }
 
+// api
 export const chatAPI = {
     start() {
         createChannel()
