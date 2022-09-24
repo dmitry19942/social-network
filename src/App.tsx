@@ -98,6 +98,7 @@ class App extends React.Component<AppPropsType, AppRootStateType> {
                         <Content style={{padding: '0 24px', minHeight: 280}}>
                             <Switch>
                                 <Route exact path='/' render={() => <Redirect to={'/social-network/profile'}/>}/>
+                                <Route exact path='/social-network' render={() => <Redirect to={'/social-network/profile'}/>}/>
                                 <Route path={'/social-network/profile/:userId?'} render={() => <SuspendedProfile/>}/>
                                 <Route path={'/social-network/dialogs'} render={() => <SuspendedDialogs/>}/>
                                 <Route path={'/social-network/users'} render={() => <UsersPage/>}/>

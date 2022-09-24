@@ -76,7 +76,7 @@ const AddMessageForm: React.FC = () => {
 
     const sendMessageHandler = () => {
         if (!message) {
-            return
+            return alert('empty message cannot be sent')
         }
         dispatch(sendMessageThunkCreator(message))
         setMessage('')
