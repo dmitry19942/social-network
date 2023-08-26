@@ -4,6 +4,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/user.jpg";
 import ProfileDataForm from "./ProfileDataForm";
+import {Button} from "../../common/Button/Button";
 
 //types
 export type ContactsType = {
@@ -72,13 +73,9 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
 
     return (
     <div>
-        <div>
-            <img className={s.img}
-                src='https://www.study.ru/uploads/server/jqMeRR0Fw70d5uNi.jpg' alt='' />
-        </div>
         <div className={s.descriptionBlock}>
             <img src={props.profile.photos.large || userPhoto} className={s.mainPhoto} alt=""/>
-            {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+            {props.isOwner && <input className={s.button} type={'file'} onChange={onMainPhotoSelected}/>}
             { editMode ?  <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} /> : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => {setEditMode(true)}} /> }
             <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
         </div>
@@ -88,7 +85,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
     return <div>
-        {isOwner && <div><button onClick={goToEditMode}>edit</button></div>}
+        {isOwner && <div><Button name={'edit'} onClick={goToEditMode} /> </div>}
         <div>
             <b>Full name</b>: {profile.fullName}
         </div>

@@ -5,6 +5,7 @@ import {MyPostsType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators";
 import {Textarea} from "../../common/FormControls/FormControls";
+import {Button} from "../../common/Button/Button";
 
 // types
 type FormDataType = {
@@ -24,7 +25,7 @@ export const MyPosts = React.memo((props: MyPostsType) => {
 
     return (
         <div className={s.postsBlock}>
-            <h3>My posts</h3>
+            <h2>My posts</h2>
             <div>
                 <AddPostReduxForm onSubmit={addNewPost} />
             </div>
@@ -35,7 +36,7 @@ export const MyPosts = React.memo((props: MyPostsType) => {
     )
 })
 
-const maxLength30 = maxLengthCreator(30)
+const maxLength100 = maxLengthCreator(100)
 
 const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     const onClickHandler = () => {
@@ -50,10 +51,10 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength30]} onKeyPress={onKeyPressHandler} />
+                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength100]} onKeyPress={onKeyPressHandler} />
             </div>
             <div>
-                <button>Add post</button>
+                <Button name={'Add post'} />
             </div>
         </form>
     )

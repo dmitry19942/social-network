@@ -14,7 +14,7 @@ export function Post(props: PostType) {
             <img src="https://likevideogid.ru/wp-content/uploads/2019/11/likee_avatarka.jpg" alt=''/>
             {props.message}
             <div>
-                <span>like</span> {props.likesCount}
+                <span className={s.like}>like:</span> {props.likesCount}
             </div>
         </div>
     )
