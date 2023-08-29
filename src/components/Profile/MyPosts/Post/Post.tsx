@@ -11,7 +11,7 @@ type PostType = {
 export function Post(props: PostType) {
     return (
         <div className={s.item}>
-            <img src="https://likevideogid.ru/wp-content/uploads/2019/11/likee_avatarka.jpg" alt=''/>
+            <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png" alt=''/>
             {props.message}
             <div>
                 <span className={s.like}>like:</span> {props.likesCount}

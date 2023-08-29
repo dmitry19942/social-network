@@ -6,6 +6,7 @@ import {DialogsPropsType} from "./DialogsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormControls/FormControls";
 import {maxLengthCreator, required} from "../../utils/validators";
+import {Button} from "../common/Button/Button";
 
 // types
 type FormDataType = {
@@ -15,7 +16,7 @@ type FormDataType = {
 // component
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogsElements = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
+    let dialogsElements = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} img={d.img} /> )
     let messagesElements = props.messages.map( m => <Message key={m.id} messages={m.messages} id={m.id} />)
 
 
@@ -47,9 +48,11 @@ const AddMessageForm:  React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
     <form onSubmit={props.handleSubmit}>
         <div>
-            <Field component={Textarea} validate={[required, maxLength50]} name={'newMessageBody'} placeholder={'Enter your message'}/>
+            <Field component={Textarea} validate={[required, maxLength50]} name={'newMessageBody'} placeholder={'Enter your message'} style={{height: '43px', width: '200px', marginTop: '-6px'}} />
         </div>
-        <div><button>Send</button></div>
+        <div>
+            <Button name={'Send'} />
+        </div>
     </form>
     )
 }
