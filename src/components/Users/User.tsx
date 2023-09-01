@@ -3,6 +3,7 @@ import s from "./users.module.css";
 import userPhoto from "../../assets/images/user.jpg";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {Button} from "../common/Button/Button";
 
 // types
 export type UserPropsType = {
@@ -19,27 +20,23 @@ export const User = (props: UserPropsType) => {
             <span>
                 <div>
                         <NavLink to={'/social-network/profile/' + props.user.id}>
-                        <img src={props.user.photos.small != null ? props.user.photos.small : userPhoto} className={s.userPhoto} alt=''/>
+                        <img style={{marginBottom: '5px', marginTop: '5px'}} src={props.user.photos.small != null ? props.user.photos.small : userPhoto} className={s.userPhoto} alt=''/>
                             </NavLink>
                     </div>
                     <div>
                         {props.user.followed ?
-                            <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
-                                props.unFollowThunkCreator(props.user.id)
-                            }
-                            }> Unfollow</button> :
-                            <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
-                                props.followThunkCreator(props.user.id)
-                            }
-                            }> Follow</button>}
+                            <Button name={'Unfollow'} onClick={() => {
+                                props.unFollowThunkCreator(props.user.id)}} disabled={props.followingInProgress.some(id => id === props.user.id)} />
+                            :
+                            <Button name={'Follow'} onClick={() => {
+                                props.followThunkCreator(props.user.id)}} disabled={props.followingInProgress.some(id => id === props.user.id)}  />
+                        }
                     </div>
                 </span>
             <span>
-                    <span>
-                        <div>{props.user.name}</div>
-                        <div>{props.user.status}</div>
-                        <div>{'id: '}{props.user.id}</div>
-                    </span>
+                        <h3>{props.user.name}</h3>
+                        <h3 style={{marginTop: '-5px'}}>{props.user.status}</h3>
+                        <h3 style={{marginTop: '-5px'}}>{'id: '}{props.user.id}</h3>
                 </span>
         </div>)
 }

@@ -3,7 +3,10 @@
 }
 .pageNumber {
     padding: 2px;
-    border: 1px solid grey;
+    background-color: #b710c9;
+    color: white;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .pageNumber.selectedPage {

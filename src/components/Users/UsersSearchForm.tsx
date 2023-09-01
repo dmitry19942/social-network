@@ -3,6 +3,7 @@ import React from "react";
 import {FilterType} from "../../redux/users-reducer";
 import {useSelector} from "react-redux";
 import {getUsersFilter} from "../../redux/users-selectors";
+import {Button} from "../common/Button/Button";
 
 // types
 type UsersSearchFormType = {
@@ -42,14 +43,12 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
             {({isSubmitting}) => (
                 <Form>
                     <Field type='text' name='term'/>
-                    <Field name='friend' as='select'>
+                    <Field name='friend' as='select' style={{marginLeft: '5px', marginRight: '5px', height: '30px'}}>
                         <option value="null">All</option>
                         <option value="true">Only followed</option>
                         <option value="false">Only unfollowed</option>
                     </Field>
-                    <button type='submit' disabled={isSubmitting}>
-                        Find
-                    </button>
+                        <Button name={'Find'} disabled={isSubmitting} />
                 </Form>
             )}
         </Formik>
