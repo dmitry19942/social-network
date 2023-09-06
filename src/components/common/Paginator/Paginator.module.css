@@ -7,9 +7,11 @@
     color: white;
     margin-left: 4px;
     margin-right: 4px;
+    cursor: pointer;
 }
 
 .pageNumber.selectedPage {
     font-weight: bold;
     border-color: black;
+    background-color: #0066CC;
 }

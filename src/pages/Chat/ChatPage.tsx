@@ -7,6 +7,7 @@ import {
     stopMessagesListeningThunkCreator
 } from "../../redux/chat-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
+import {Button} from "../../components/common/Button/Button";
 
 export const ChatPage: React.FC = () => {
     return <div>
@@ -87,7 +88,7 @@ const AddMessageForm: React.FC = () => {
             <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message}></textarea>
         </div>
         <div>
-            <button disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</button>
+            <Button name={'Send'} onClick={sendMessageHandler} disabled={status !== 'ready'} />
         </div>
     </div>
 }

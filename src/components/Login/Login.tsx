@@ -7,6 +7,7 @@ import {loginThunkCreator} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppRootStateType} from "../../redux/redux-store";
 import s from '../common/FormControls/FormControls.module.css'
+import {Button} from "../common/Button/Button";
 
 // types
 type FormDataType = {
@@ -23,12 +24,8 @@ type LoginFormOwnProps = {
 export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnProps> & LoginFormOwnProps> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div>
                 <Field placeholder={'Email'} name={'email'} component={Input} validate={[required]}/>
-            </div>
-            <div>
                 <Field placeholder={'Password'} name={'password'} component={Input} type={'password'} validate={[required]}/>
-            </div>
             <div>
                 <Field component={Input} name={'rememberMe'} type="checkbox"/> remember me
             </div>
@@ -39,7 +36,7 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnPro
                 {props.error}
             </div>}
             <div>
-                <button>Login</button>
+                <Button name={'Login'} />
             </div>
         </form>
     )
