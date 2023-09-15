@@ -8,6 +8,7 @@ import {
 } from "../../redux/chat-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {Button} from "../../components/common/Button/Button";
+import {NavLink} from "react-router-dom";
 
 export const ChatPage: React.FC = () => {
     return <div>
@@ -61,7 +62,10 @@ const Messages: React.FC = () => {
 
 const Message: React.FC<{message: ChatMessageAPIType}> = React.memo( ({message}) => {
     return <div>
-        <img src={message.photo} style={{width: '30px'}} alt=''/> <b>{message.userName}</b>
+        <NavLink to={'/social-network/profile/' + message.userId}>
+        <img src={message.photo} style={{width: '30px', marginRight: '5px'}} alt=''/>
+            <b>{message.userName}</b>
+        </NavLink>
         <br/>
         {message.message}
         <hr/>
