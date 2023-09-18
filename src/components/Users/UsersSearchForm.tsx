@@ -42,7 +42,7 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
         >
             {({isSubmitting}) => (
                 <Form>
-                    <Field type='text' name='term'/>
+                    <Field type='text' name='term' placeholder={'Enter name'}/>
                     <Field name='friend' as='select' style={{marginLeft: '5px', marginRight: '5px', height: '30px'}}>
                         <option value="null">All</option>
                         <option value="true">Only followed</option>

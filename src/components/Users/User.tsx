@@ -25,7 +25,7 @@ export const User = (props: UserPropsType) => {
                     </div>
                     <div>
                         {props.user.followed ?
-                            <Button name={'Unfollow'} onClick={() => {
+                            <Button classname={s.buttonSecondary} name={'Unfollow'} onClick={() => {
                                 props.unFollowThunkCreator(props.user.id)}} disabled={props.followingInProgress.some(id => id === props.user.id)} />
                             :
                             <Button name={'Follow'} onClick={() => {

@@ -15,3 +15,23 @@
     border-color: black;
     background-color: #0066CC;
 }
+
+.buttonSecondary {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+    padding: 5px 24px;
+    background-color: #c54a59;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 1px solid #c54a59;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.buttonSecondary:hover {
+    background: #cc86a1;
+}
