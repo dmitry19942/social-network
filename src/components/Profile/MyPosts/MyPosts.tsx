@@ -1,4 +1,4 @@
-import React, {KeyboardEvent} from "react";
+import React from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {MyPostsType} from "./MyPostsContainer";
@@ -39,19 +39,11 @@ export const MyPosts = React.memo((props: MyPostsType) => {
 const maxLength100 = maxLengthCreator(100)
 
 const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    const onClickHandler = () => {
-
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            onClickHandler()
-        }
-    }
 
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength100]} onKeyPress={onKeyPressHandler} />
+                <Field component={Textarea} name={'newPostText'} placeholder={'Enter your post'} validate={[required, maxLength100]} />
             </div>
             <div>
                 <Button name={'Add post'} />
